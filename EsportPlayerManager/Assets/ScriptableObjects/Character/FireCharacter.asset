@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2330018aeb3a72d45a3cdf48f2b2933d, type: 3}
+  m_Name: FireCharacter
+  m_EditorClassIdentifier: 
+  characterName: FireCharacter
+  baseHealth: 80
+  tempHealth: 80
+  baseAttack: 100
+  tempAttack: 187
+  baseAttackSpeed: 0.5
+  tempAttackSpeed: 1.1000001
+  baseDefense: 50
+  tempDefense: 50
+  abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
+  passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
+  characterClass: {fileID: 0}
