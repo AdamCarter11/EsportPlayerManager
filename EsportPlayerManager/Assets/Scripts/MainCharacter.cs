@@ -13,6 +13,9 @@ public struct CharProfficencies
 }
 public class MainCharacter : MonoBehaviour
 {
+    // making it persist between scenes for training purposes
+    private static MainCharacter instance;
+
     [SerializeField] List<CharacterClass> listOfClasses;    // List of all possible classes
     [SerializeField] CharacterClass charClass;              // Their current selected character
     private List<CharacterClass> charactersOnTeam;          // Holds all the characters the player can swap into (their team for that round)
@@ -21,6 +24,18 @@ public class MainCharacter : MonoBehaviour
 
     bool tempSwapBool = true;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
