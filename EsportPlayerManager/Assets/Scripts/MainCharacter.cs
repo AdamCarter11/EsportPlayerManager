@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public struct CharProfficencies
 {
@@ -38,7 +39,8 @@ public class MainCharacter : MonoBehaviour
     }
     private void Start()
     {
-        enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        //enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
         //enemyRef.changeStats(charClass);
         //charClass.resetVariables();
         foreach (CharacterClass tempChar in listOfClasses)
@@ -59,6 +61,13 @@ public class MainCharacter : MonoBehaviour
 
         // if trained fireDude
         //IncreaseProf(fireDudeObj, .1f);
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "CombatScene")
+        {
+            enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
+        }
     }
     private void Update()
     {
