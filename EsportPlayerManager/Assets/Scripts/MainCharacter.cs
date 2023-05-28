@@ -109,7 +109,11 @@ public class MainCharacter : MonoBehaviour
     {
         combatRounds++;
         wins += changeWinVal;
-        if(combatRounds >= 4)
+        foreach (CharacterClass tempChar in listOfClasses)
+        {
+            tempChar.resetVariables();
+        }
+        if (combatRounds >= 4)
         {
             // end combat
             if(wins >= 2)

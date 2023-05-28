@@ -21,6 +21,7 @@ public class RoomUIManager : MonoBehaviour
         playerRef = GameObject.FindGameObjectWithTag("MainCharacter");
         actionPointText.text = "Action points: " + actionPoints;
         dayCountText.text = "Days: " + playerRef.GetComponent<MainCharacter>().dayCount;
+        
     }
     public void StartGame()
     {
@@ -33,6 +34,43 @@ public class RoomUIManager : MonoBehaviour
         {
             activeCharSelect = !activeCharSelect;
             characterSelectPanel.SetActive(activeCharSelect);
+            if (activeCharSelect)
+            {
+                UpdateUIImages(0, -1);
+            }
+        }
+    }
+    void UpdateUIImages(int whichMode, int whichSprite)
+    {
+        int i = 0;
+        foreach (Transform childTransform in characterSelectPanel.transform)
+        {
+            // Access the child object
+            GameObject childObject = childTransform.gameObject;
+            print("Name: " + childObject.name);
+
+            // Check if the child object has the specific component
+            Image component = childObject.GetComponent<Image>();
+            if (component != null && i < playerRef.GetComponent<MainCharacter>().listOfClasses.Count)
+            {
+                if (whichMode == 0)
+                {
+                    component.sprite = playerRef.GetComponent<MainCharacter>().listOfClasses[i].characterSprite;
+                }
+                if (whichMode == 1 && i == whichSprite)
+                {
+                    component.color = Color.gray;
+                }
+                if (whichMode == 2 && i == whichSprite)
+                {
+                    component.color = Color.red;
+                }
+                if (whichMode == 3)
+                {
+                    component.color = Color.white;
+                }
+                i++;
+            }
         }
     }
     IEnumerator FillXpBar(float startingXp, float targetXp)
