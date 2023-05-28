@@ -25,5 +25,5 @@ MonoBehaviour:
   manaIncreaseAmount: 1
   abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
-  characterClass: {fileID: 0}
+  characterClass: {fileID: 11400000, guid: dd8a28825fdcd97479f04fe7d0b264e4, type: 2}
   characterSprite: {fileID: 21300000, guid: d2853b37f6e3fb941b94398f1941d0c2, type: 3}
