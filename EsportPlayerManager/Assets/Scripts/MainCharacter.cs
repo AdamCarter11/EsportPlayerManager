@@ -22,6 +22,7 @@ public class MainCharacter : MonoBehaviour
     public List<CharacterClass> charactersOnTeam;          // Holds all the characters the player can swap into (their team for that round)
     List<CharProfficencies> charProf = new List<CharProfficencies>();   // a list of our champions profficencies
     private MainEnemy enemyRef;
+    [HideInInspector] public int dayCount;
 
     bool tempSwapBool = true;
 
