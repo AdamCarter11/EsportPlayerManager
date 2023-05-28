@@ -16,7 +16,7 @@ MonoBehaviour:
   abilityDesc: Lowers enemies attack speed, Increase my attack speed, and deals damage
     overtime
   damage: 0
-  cooldown: 5
+  manaCost: 100
   decreaseStats:
   - 0
   - 0

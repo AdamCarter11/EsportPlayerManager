@@ -365,6 +365,7 @@ MonoBehaviour:
   listOfClasses:
   - {fileID: 11400000, guid: 89bab57ad39ca0245b47589e95c9ad53, type: 2}
   - {fileID: 11400000, guid: 5df5dfd36d2d04249a0a90e3f1d91dfe, type: 2}
+  - {fileID: 11400000, guid: 94c45ae5fc342594daa74748fe50f5e2, type: 2}
   charClass: {fileID: 11400000, guid: 89bab57ad39ca0245b47589e95c9ad53, type: 2}
   charactersOnTeam: []
   dayCount: 0

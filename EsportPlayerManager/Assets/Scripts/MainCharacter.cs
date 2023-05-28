@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public struct CharProfficencies
 {
@@ -25,6 +26,8 @@ public class MainCharacter : MonoBehaviour
     [HideInInspector] public int dayCount;
 
     bool tempSwapBool = true;
+    [HideInInspector] public bool startCombat;  // called from the banPick script to start combat
+    int whichCharacter = 0;
 
     private void Awake()
     {
@@ -57,9 +60,6 @@ public class MainCharacter : MonoBehaviour
         rockGuyObj.nameOfClass = listOfClasses[1].name;
         charProf.Add(rockGuyObj);
 
-        StartCoroutine(AttackTrigger());
-        
-
         // if trained fireDude
         //IncreaseProf(fireDudeObj, .1f);
     }
@@ -72,16 +72,10 @@ public class MainCharacter : MonoBehaviour
     }
     private void Update()
     {
-        // TO DO: actually make a swapping button and let them select who to swap to
-        if (Input.GetKeyDown(KeyCode.Space) && tempSwapBool)
+        if (startCombat)
         {
-            swapCharacters(listOfClasses[1]);
-            tempSwapBool = false;
-        }
-        else if(Input.GetKeyDown(KeyCode.Space) && !tempSwapBool)
-        {
-            swapCharacters(listOfClasses[0]);
-            tempSwapBool = true;
+            startCombat = false;
+            StartCoroutine(AttackTrigger());
         }
     }
 
@@ -91,11 +85,6 @@ public class MainCharacter : MonoBehaviour
         {
             yield return new WaitForSeconds(charClass.baseAttackSpeed);
             charClass.currentMana += charClass.manaIncreaseAmount;
-            if(charClass.currentMana >= charClass.abilities.manaCost)
-            {
-                charClass.currentMana -= charClass.abilities.manaCost;
-                // TO DO: activate ability
-            }
             switch (charClass.passiveAbility.passiveEffect)
             {
                 case passiveAbility.increaseDamagePerAttack:
@@ -109,8 +98,10 @@ public class MainCharacter : MonoBehaviour
         }
     }
 
-    void swapCharacters(CharacterClass whichToSwapTo)
+    public void swapCharacters() //CharacterClass whichToSwapTo
     {
+        whichCharacter++;
+        CharacterClass whichToSwapTo = charactersOnTeam[whichCharacter % 3];
         charClass = whichToSwapTo;
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
@@ -133,6 +124,10 @@ public class MainCharacter : MonoBehaviour
         //print("return val: " + charProf[whichChar].lvlUp);
         return charProf[whichChar].lvlUp;
     }
+    public CharacterClass getCurrentCharacter()
+    {
+        return charClass;
+    }
     public void changeStats(CharacterClass charClassRef)
     {
         charClass.tempHealth -= Mathf.RoundToInt(charClassRef.abilities.decreaseStats[0]);
@@ -140,6 +135,15 @@ public class MainCharacter : MonoBehaviour
         charClass.tempAttackSpeed -= charClassRef.abilities.decreaseStats[2];
         charClass.tempDefense -= Mathf.RoundToInt(charClassRef.abilities.decreaseStats[3]);
         //print("Enemy health: " + charClass.tempHealth);
+    }
+    public void ActivateAbility()
+    {
+        if (charClass.currentMana >= charClass.abilities.manaCost)
+        {
+            print("Activated ability!");
+            charClass.currentMana -= charClass.abilities.manaCost;
+            // TO DO: activate ability
+        }
     }
 
 }

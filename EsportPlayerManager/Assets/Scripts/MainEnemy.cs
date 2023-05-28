@@ -38,11 +38,7 @@ public class MainEnemy : MonoBehaviour
         {
             yield return new WaitForSeconds(charClass.baseAttackSpeed);
             charClass.currentMana += charClass.manaIncreaseAmount;
-            if (charClass.currentMana >= charClass.abilities.manaCost)
-            {
-                charClass.currentMana -= charClass.abilities.manaCost;
-                // TO DO: activate ability
-            }
+            
             switch (charClass.passiveAbility.passiveEffect)
             {
                 case passiveAbility.increaseDamagePerAttack:
@@ -62,5 +58,13 @@ public class MainEnemy : MonoBehaviour
         charClass.tempAttackSpeed -= charClassRef.abilities.decreaseStats[2];
         charClass.tempDefense -= Mathf.RoundToInt(charClassRef.abilities.decreaseStats[3]);
         //print("Enemy health: " + charClass.tempHealth);
+    }
+    public void ActivateEnemyAbility()
+    {
+        if (charClass.currentMana >= charClass.abilities.manaCost)
+        {
+            charClass.currentMana -= charClass.abilities.manaCost;
+            // TO DO: activate ability
+        }
     }
 }
