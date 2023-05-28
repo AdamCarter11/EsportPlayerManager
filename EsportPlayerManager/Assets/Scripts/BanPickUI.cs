@@ -18,6 +18,7 @@ public class BanPickUI : MonoBehaviour
     [SerializeField] TMP_Text enemyHealthText, enemyManaText;
     [SerializeField] TMP_Text playerNameText;
     [SerializeField] TMP_Text enemyNameText;
+    [SerializeField] TMP_Text roundsText;
 
 
     private int bpTimes = 0;
@@ -35,7 +36,7 @@ public class BanPickUI : MonoBehaviour
         currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
         enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
         currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
-
+        //playerRef.dayCount++;
         UpdateUIImages(0, -1);
     }
 
@@ -209,6 +210,7 @@ public class BanPickUI : MonoBehaviour
         playerManaText.text = "Mana: " + currPlayerChar.currentMana;
         enemyHealthText.text = "Health: " + currEnemyChar.tempHealth;
         enemyManaText.text = "Mana: " + currEnemyChar.currentMana;
+        roundsText.text = "Round: " + playerRef.ReturnRounds();
     }
     public void WinLoseCondition()
     {

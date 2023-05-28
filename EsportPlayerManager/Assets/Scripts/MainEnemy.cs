@@ -7,6 +7,7 @@ public class MainEnemy : MonoBehaviour
     [SerializeField] CharacterClass charClass;
     private MainCharacter playerRef;
     public List<CharacterClass> charactersOnTeam;
+    bool enemyStartCombat = false;
 
     private void Start()
     {
@@ -33,13 +34,23 @@ public class MainEnemy : MonoBehaviour
         {
             playerRef.changeStats(charClass);
         }
-        if (playerRef.startCombat)
+        if (enemyStartCombat)
         {
+            enemyStartCombat = false;
             //print("Starting combat, player health: " + playerRef.getCurrentCharacter().tempHealth);
             print("enemy started combat");
             //startCombat = false;
             StartCoroutine(AttackTrigger());
         }
+    }
+    public void SwitchEnemyToAttack()
+    {
+        enemyStartCombat = true;
+    }
+    public void StopAttacking()
+    {
+        //StopCoroutine(AttackTrigger());
+        StopAllCoroutines();
     }
     IEnumerator AttackTrigger()
     {

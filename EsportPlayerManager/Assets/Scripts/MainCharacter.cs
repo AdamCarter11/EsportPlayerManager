@@ -37,8 +37,11 @@ public class MainCharacter : MonoBehaviour
 
     bool tempSwapBool = true;
     [HideInInspector] public bool startCombat;  // called from the banPick script to start combat
+    [HideInInspector] public bool resetHealth;
     int whichCharacter = 0;
     BanPickUI banPickRef;
+    int wins = 0;
+    int combatRounds = 1;
 
     private void Awake()
     {
@@ -75,7 +78,7 @@ public class MainCharacter : MonoBehaviour
         startingSeasonLength = seasonLength;
         // if trained fireDude
         //IncreaseProf(fireDudeObj, .1f);
-        enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
+        //enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -91,16 +94,42 @@ public class MainCharacter : MonoBehaviour
         if (startCombat)
         {
             startCombat = false;
+            resetHealth = true;
+            enemyRef.SwitchEnemyToAttack();
             StartCoroutine(AttackTrigger());
         }
-        if(charClass.tempHealth <= 0)
+        if(charClass.tempHealth <= 0 && resetHealth)
         {
             print("character death");
             swapCharacters();
         }
         SeasonBalancing();
     }
-
+    public void ChangeRound(int changeWinVal)
+    {
+        combatRounds++;
+        wins += changeWinVal;
+        if(combatRounds >= 4)
+        {
+            // end combat
+            if(wins >= 2)
+            {
+                // player won
+            }
+            else
+            {
+                // enemy won
+            }
+            SceneManager.LoadScene("Room");
+            combatRounds = 0;
+            dayCount++;
+            wins = 0;
+        }
+    }
+    public int ReturnRounds()
+    {
+        return combatRounds;
+    }
     void SeasonBalancing()
     {
         if(dayCount >= seasonLength)
@@ -220,11 +249,20 @@ public class MainCharacter : MonoBehaviour
         CharacterClass whichToSwapTo;
         if (charClass.tempHealth <= 0)
         {
-            if (charactersOnTeam.Count <= 1)
+            if (charactersOnTeam.Count <= 1 && resetHealth)
             {
                 // game over
                 print("PLAYER LOST");
+                resetHealth = false;
+                charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                foreach (CharacterClass tempChar in listOfClasses)
+                {
+                    tempChar.resetVariables();
+                }
+                StopCoroutine(AttackTrigger());
+                enemyRef.StopAttacking();
                 banPickRef.WinLoseCondition();
+                ChangeRound(0);
             }
             else
             {
