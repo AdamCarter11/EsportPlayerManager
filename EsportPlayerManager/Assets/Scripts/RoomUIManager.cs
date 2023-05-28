@@ -17,6 +17,7 @@ public class RoomUIManager : MonoBehaviour
     int actionPoints = 3;
     GameObject playerRef;
     bool activeCharSelect = false;
+    bool eventUpgrade = false;
 
     private void Start()
     {
@@ -30,22 +31,50 @@ public class RoomUIManager : MonoBehaviour
             if(rando < 30)
             {
                 int whichCharRando = Random.Range(0, 9);
-                string tempString = "You watched a video showing some spicy new tricks for: " + playerRef.GetComponent<MainCharacter>().listOfClasses[whichCharRando].name;
+                string tempString = "You watched a video showing some spicy new tricks for " + playerRef.GetComponent<MainCharacter>().listOfClasses[whichCharRando].name;
+                eventUpgrade = true;
                 CharacterSelect(whichCharRando);
-                StartCoroutine(EventCoroutine(tempString));
+                StartCoroutine(EventCoroutine(tempString, 5));
                 print("Upgraded Character");
             }
-            else if(rando >= 30 && rando < 60)
+            else if(rando >= 30 && rando < 40)
             {
-
+                string tempString = "You decided to mix things up today and play some video games for a change";
+                StartCoroutine(EventCoroutine(tempString, 3));
+            }
+            else if (rando >= 40 && rando < 50)
+            {
+                string tempString = "Make sure to pet your pet";
+                StartCoroutine(EventCoroutine(tempString, 3));
+            }
+            else if (rando >= 50 && rando < 55)
+            {
+                string tempString = "You got distracted by some pizza that appeared in your room and lost some valuable training time";
+                actionPoints -= 2;
+                actionPointText.text = "Action points: " + actionPoints;
+                StartCoroutine(EventCoroutine(tempString, 5));
+            }
+            else if (rando >= 55 && rando < 65)
+            {
+                string tempString = "You decided to try and touch grass. It didn't go well";
+                actionPoints--;
+                actionPointText.text = "Action points: " + actionPoints;
+                StartCoroutine(EventCoroutine(tempString, 5));
+            }
+            else if (rando >= 65 && rando < 70)
+            {
+                string tempString = "You found the golden duck! You feel extra motivated today";
+                actionPoints += 5;
+                actionPointText.text = "Action points: " + actionPoints;
+                StartCoroutine(EventCoroutine(tempString, 5));
             }
         }
     }
-    IEnumerator EventCoroutine(string eventString)
+    IEnumerator EventCoroutine(string eventString , int textTime)
     {
         eventObj.SetActive(true);
         eventObj.transform.GetChild(0).GetComponent<TMP_Text>().text = eventString;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(textTime);
         eventObj.SetActive(false);
     }
     public void StartGame()
@@ -123,7 +152,12 @@ public class RoomUIManager : MonoBehaviour
             float startingVal = playerRef.GetComponent<MainCharacter>().returnCharProf(whichChar);
             //print("starting val: " + startingVal);
             float changeVal = Random.Range(.10f, .20f);
-            actionPoints--;
+            if (!eventUpgrade)
+            {
+                actionPoints--;
+                
+            }
+            eventUpgrade = false;
             levelUpPanel.SetActive(true);
             StartCoroutine(FillXpBar(startingVal, (startingVal + changeVal)));
             playerRef.GetComponent<MainCharacter>().IncreaseProf(whichChar, changeVal);
