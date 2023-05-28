@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea193d33b6d4d014c993e724c651ab19, type: 3}
-  m_Name: FireAbility
+  m_Name: Burning Sprint
   m_EditorClassIdentifier: 
-  abilityName: Burn
-  abilityDesc: Lowers enemies attack speed, Increase my attack speed, and deals damage
-    overtime
-  damage: 0
-  manaCost: 100
+  abilityName: Burning Sprint
+  abilityDesc: You're on fire, RUN!
+  damage: 300
+  manaCost: 50
   decreaseStats:
   - 0
   - 0
-  - -0.1
+  - 0
   - 0
   increaseStats:
   - 0
   - 0
   - -0.1
   - 0
-  damageOverTime: 1
+  damageOverTime: 0

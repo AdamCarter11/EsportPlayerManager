@@ -98,7 +98,7 @@ public class MainEnemy : MonoBehaviour
     {
         charClass.tempHealth -= Mathf.RoundToInt(charClassRef.abilities.decreaseStats[0]);
         charClass.tempAttack -= Mathf.RoundToInt(charClassRef.abilities.decreaseStats[1]);
-        charClass.tempAttackSpeed -= charClassRef.abilities.decreaseStats[2];
+        charClass.tempAttackSpeed *= charClassRef.abilities.decreaseStats[2];
         charClass.tempDefense -= Mathf.RoundToInt(charClassRef.abilities.decreaseStats[3]);
         //print("Enemy health: " + charClass.tempHealth);
     }

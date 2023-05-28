@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 389cb60d748674443aa41d80391e751f, type: 3}
-  m_Name: MageClass
+  m_Name: HedgehogClass
   m_EditorClassIdentifier: 
-  className: Mage Class
-  description: Both Water and Mage
-  classTypeEnumVal: 1
-  occupationClassTypeEnumVal: 1
+  className: Grass Berserker
+  description: 
+  classTypeEnumVal: 2
+  occupationClassTypeEnumVal: 3

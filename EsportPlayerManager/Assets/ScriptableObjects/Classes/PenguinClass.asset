@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 389cb60d748674443aa41d80391e751f, type: 3}
-  m_Name: HotdogClass
+  m_Name: PenguinClass
   m_EditorClassIdentifier: 
-  className: Fire Berseker Class
-  description: Both fire and fighter (for hotdog)
-  classTypeEnumVal: 0
-  occupationClassTypeEnumVal: 3
+  className: Water Rogue
+  description: Ice penguin
+  classTypeEnumVal: 1
+  occupationClassTypeEnumVal: 4

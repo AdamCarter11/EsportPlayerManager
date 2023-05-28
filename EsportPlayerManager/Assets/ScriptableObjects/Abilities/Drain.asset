@@ -9,10 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 389cb60d748674443aa41d80391e751f, type: 3}
-  m_Name: HotdogClass
+  m_Script: {fileID: 11500000, guid: ea193d33b6d4d014c993e724c651ab19, type: 3}
+  m_Name: Drain
   m_EditorClassIdentifier: 
-  className: Fire Berseker Class
-  description: Both fire and fighter (for hotdog)
-  classTypeEnumVal: 0
-  occupationClassTypeEnumVal: 3
+  abilityName: Drain
+  abilityDesc: 
+  damage: 150
+  manaCost: 80
+  decreaseStats:
+  - 0
+  - 0
+  - 0
+  - 0
+  increaseStats:
+  - 0
+  - 10
+  - 0
+  - 10
+  damageOverTime: 0

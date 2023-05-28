@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2330018aeb3a72d45a3cdf48f2b2933d, type: 3}
-  m_Name: Fighter
+  m_Name: Hedeghog
   m_EditorClassIdentifier: 
-  characterName: Figher Dude
-  baseHealth: 120
-  tempHealth: 120
+  characterName: Hedgehog Berserker
+  baseHealth: 200
+  tempHealth: 0
   baseAttack: 50
-  tempAttack: 50
+  tempAttack: 0
   baseAttackSpeed: 1
-  tempAttackSpeed: 1
-  baseDefense: 60
-  tempDefense: 60
+  tempAttackSpeed: 0
+  baseDefense: 10
+  tempDefense: 0
   currentMana: 0
-  manaIncreaseAmount: 1
+  manaIncreaseAmount: 3
   abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
-  characterClass: {fileID: 11400000, guid: dd8a28825fdcd97479f04fe7d0b264e4, type: 2}
-  characterSprite: {fileID: 21300000, guid: d2853b37f6e3fb941b94398f1941d0c2, type: 3}
+  characterClass: {fileID: 0}
+  characterSprite: {fileID: 21300000, guid: 075ad59118b4c9541b48b57845302f1b, type: 3}

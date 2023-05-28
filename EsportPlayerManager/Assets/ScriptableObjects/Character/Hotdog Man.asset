@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2330018aeb3a72d45a3cdf48f2b2933d, type: 3}
-  m_Name: Berserker
+  m_Name: Hotdog Man
   m_EditorClassIdentifier: 
-  characterName: Berserker
-  baseHealth: 200
-  tempHealth: 0
-  baseAttack: 50
-  tempAttack: 0
+  characterName: Hotdog Man
+  baseHealth: 100
+  tempHealth: 120
+  baseAttack: 100
+  tempAttack: 50
   baseAttackSpeed: 1
-  tempAttackSpeed: 0
+  tempAttackSpeed: 1
   baseDefense: 10
-  tempDefense: 0
+  tempDefense: 60
   currentMana: 0
-  manaIncreaseAmount: 3
+  manaIncreaseAmount: 8
   abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
-  characterClass: {fileID: 0}
-  characterSprite: {fileID: 21300000, guid: 29a0bc78a0d9dcd4a9534dde31f9ad6c, type: 3}
+  characterClass: {fileID: 11400000, guid: dd8a28825fdcd97479f04fe7d0b264e4, type: 2}
+  characterSprite: {fileID: 21300000, guid: d2853b37f6e3fb941b94398f1941d0c2, type: 3}
