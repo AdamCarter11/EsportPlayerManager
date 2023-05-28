@@ -17,9 +17,9 @@ public class MainCharacter : MonoBehaviour
     // making it persist between scenes for training purposes
     private static MainCharacter instance;
 
-    [SerializeField] List<CharacterClass> listOfClasses;    // List of all possible classes
+    public List<CharacterClass> listOfClasses;    // List of all possible classes
     [SerializeField] CharacterClass charClass;              // Their current selected character
-    private List<CharacterClass> charactersOnTeam;          // Holds all the characters the player can swap into (their team for that round)
+    public List<CharacterClass> charactersOnTeam;          // Holds all the characters the player can swap into (their team for that round)
     List<CharProfficencies> charProf = new List<CharProfficencies>();   // a list of our champions profficencies
     private MainEnemy enemyRef;
 
