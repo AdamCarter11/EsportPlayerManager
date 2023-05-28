@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Hedgehog Berserker
   baseHealth: 200
-  tempHealth: 0
+  tempHealth: 200
   baseAttack: 50
-  tempAttack: 0
+  tempAttack: 50
   baseAttackSpeed: 1
-  tempAttackSpeed: 0
+  tempAttackSpeed: 1
   baseDefense: 10
-  tempDefense: 0
+  tempDefense: 10
   currentMana: 0
   manaIncreaseAmount: 8
-  abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
+  abilities: {fileID: 11400000, guid: 3849e70db5a49d949b30e4e1a08dee69, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: 4b60c4bbb88f9f842b44e6797eb4e7d8, type: 2}
   characterSprite: {fileID: 21300000, guid: 075ad59118b4c9541b48b57845302f1b, type: 3}
