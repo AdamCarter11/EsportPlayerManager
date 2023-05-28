@@ -108,14 +108,23 @@ public class MainCharacter : MonoBehaviour
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
 
-    void IncreaseProf(CharProfficencies whichChar , float xpInrease)
+    public void IncreaseProf(int whichChar , float xpInrease)
     {
-        whichChar.lvlUp += xpInrease;
-        if(whichChar.lvlUp >= 1)
+        CharProfficencies tempCharObj = new CharProfficencies();
+        tempCharObj.lvlUp = charProf[whichChar].lvlUp;
+        //print(tempCharObj.lvlUp);
+        tempCharObj.lvlUp += xpInrease;
+        if(tempCharObj.lvlUp >= 1)
         {
-            whichChar.lvlUp = whichChar.lvlUp - 1f;
-            whichChar.level++;
+            tempCharObj.lvlUp = tempCharObj.lvlUp - 1f;
+            tempCharObj.level++;
         }
+        charProf[whichChar] = tempCharObj;
+    }
+    public float returnCharProf(int whichChar)
+    {
+        //print("return val: " + charProf[whichChar].lvlUp);
+        return charProf[whichChar].lvlUp;
     }
     public void changeStats(CharacterClass charClassRef)
     {
