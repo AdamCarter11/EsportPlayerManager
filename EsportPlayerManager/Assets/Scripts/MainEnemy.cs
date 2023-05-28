@@ -27,7 +27,7 @@ public class MainEnemy : MonoBehaviour
     }
     private void Update()
     {
-        print("Starting combat, player health: " + playerRef.getCurrentCharacter().tempHealth);
+        //print("Starting combat, player health: " + playerRef.getCurrentCharacter().tempHealth);
         if (Input.GetKeyDown(KeyCode.A))
         {
             playerRef.changeStats(charClass);
@@ -64,7 +64,7 @@ public class MainEnemy : MonoBehaviour
     }
     public void TakeDamage(int damageToTake)
     {
-        charClass.tempHealth -= Mathf.Max(damageToTake - charClass.tempDefense, 0);
+        charClass.tempHealth -= Mathf.Max(Mathf.CeilToInt((float)damageToTake / charClass.tempDefense), 1);
     }
     public void changeStats(CharacterClass charClassRef)
     {

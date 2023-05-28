@@ -13,6 +13,13 @@ public struct CharProfficencies
     public float lvlUp;
     public int level;
 }
+public struct CharBalancing
+{
+    public string name;
+    public int bans;
+    public int picks;
+    public int wins;
+}
 public class MainCharacter : MonoBehaviour
 {
     // making it persist between scenes for training purposes
@@ -22,8 +29,11 @@ public class MainCharacter : MonoBehaviour
     [SerializeField] CharacterClass charClass;              // Their current selected character
     public List<CharacterClass> charactersOnTeam;          // Holds all the characters the player can swap into (their team for that round)
     List<CharProfficencies> charProf = new List<CharProfficencies>();   // a list of our champions profficencies
+    List<CharBalancing> charBalancingList = new List<CharBalancing>();   // a list of our champions profficencies
     private MainEnemy enemyRef;
     [HideInInspector] public int dayCount;
+    [SerializeField] int seasonLength = 30;
+    int startingSeasonLength;
 
     bool tempSwapBool = true;
     [HideInInspector] public bool startCombat;  // called from the banPick script to start combat
@@ -51,15 +61,17 @@ public class MainCharacter : MonoBehaviour
         {
             tempChar.resetVariables();
         }
-        // Settiing up base characters (will need to add a check later for saved data)
-        CharProfficencies fireDudeObj = new CharProfficencies();
-        fireDudeObj.nameOfClass = listOfClasses[0].name;   // TO DO: make these match with the made scriptable objects names
-        charProf.Add(fireDudeObj);
 
-        CharProfficencies rockGuyObj = new CharProfficencies();
-        rockGuyObj.nameOfClass = listOfClasses[1].name;
-        charProf.Add(rockGuyObj);
+        SetUpClasses();
 
+        for (int i = 0; i < charProf.Count; i++)
+        {
+            CharBalancing tempDude = new CharBalancing();
+            tempDude.name = charProf[i].nameOfClass;
+            charBalancingList.Add(tempDude);
+            print(charBalancingList[i].name);
+        }
+        startingSeasonLength = seasonLength;
         // if trained fireDude
         //IncreaseProf(fireDudeObj, .1f);
         enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
@@ -82,8 +94,101 @@ public class MainCharacter : MonoBehaviour
         {
             swapCharacters();
         }
+        SeasonBalancing();
     }
 
+    void SeasonBalancing()
+    {
+        if(dayCount >= seasonLength)
+        {
+            // new season
+            seasonLength += startingSeasonLength;
+            for(int i = 0; i < listOfClasses.Count; i++)
+            {
+                bool canUpdate = true;
+                // if the wins / picks > .65 (65%) then nerf
+                if ((float)charBalancingList[i].wins / charBalancingList[i].picks > .65f)
+                {
+                    canUpdate = false;
+                    // nerf listOfClasses[i]
+                }
+                // if the wins / picks < .45 (45%) then buff
+                if ((float)charBalancingList[i].wins / charBalancingList[i].picks < .45f)
+                {
+                    canUpdate = false;
+                    // buff listOfClasses[i]
+                }
+                // if the picks < 5 (picked less than 5 times, 5 should be a var) then buff
+                if (charBalancingList[i].picks > 5 && canUpdate)
+                {
+                    canUpdate = false;
+                    // buff listOfClasses[i]
+                }
+                // if the bans > 10 (banned more than 10 times, 10 should be a var) then nerf
+                if (charBalancingList[i].bans > 10 && canUpdate)
+                {
+                    // nerf listOfClasses[i]
+                }
+            }
+        }
+    }
+    void BuffOrNerf(CharacterClass whichCharacter, int buffOrNerf)
+    {
+        if(buffOrNerf == 1)
+        {
+            // buff
+            int rando = UnityEngine.Random.Range(0,5);
+            if(rando == 0)
+            {
+                whichCharacter.baseHealth = (int)(whichCharacter.baseHealth * UnityEngine.Random.Range(1.1f, 1.3f));
+            }
+            if(rando == 1)
+            {
+                whichCharacter.baseAttack = (int)(whichCharacter.baseAttack * UnityEngine.Random.Range(1.1f, 1.3f));
+            }
+            if(rando == 2)
+            {
+                whichCharacter.baseAttackSpeed = (whichCharacter.baseAttackSpeed * UnityEngine.Random.Range(.7f, .9f));
+            }
+            if (rando == 3)
+            {
+                whichCharacter.baseDefense = (int)(whichCharacter.baseDefense * UnityEngine.Random.Range(1.1f, 1.3f));
+            }
+            if(rando == 4)
+            {
+                whichCharacter.manaIncreaseAmount = (int)(whichCharacter.manaIncreaseAmount * UnityEngine.Random.Range(1.1f, 1.3f));
+            }
+        }
+        else if (buffOrNerf == 2)
+        {
+            // nerf
+            int rando = UnityEngine.Random.Range(0, 5);
+            if (rando == 0)
+            {
+                whichCharacter.baseHealth = (int)(whichCharacter.baseHealth * UnityEngine.Random.Range(.7f, .9f));
+            }
+            if (rando == 1)
+            {
+                whichCharacter.baseAttack = (int)(whichCharacter.baseAttack * UnityEngine.Random.Range(.7f, .9f));
+            }
+            if (rando == 2)
+            {
+                whichCharacter.baseAttackSpeed = (whichCharacter.baseAttackSpeed * UnityEngine.Random.Range(1.1f, 1.3f));
+            }
+            if (rando == 3)
+            {
+                whichCharacter.baseDefense = (int)(whichCharacter.baseDefense * UnityEngine.Random.Range(.7f, .9f));
+            }
+            if (rando == 4)
+            {
+                whichCharacter.manaIncreaseAmount = (int)(whichCharacter.manaIncreaseAmount * UnityEngine.Random.Range(.7f, .9f));
+            }
+        }
+        else
+        {
+            print("Invalid buff or nerf value");
+        }
+    }
     IEnumerator AttackTrigger()
     {
         while (true)
@@ -127,7 +232,7 @@ public class MainCharacter : MonoBehaviour
     }
     public void TakeDamage(int damageToTake)
     {
-        charClass.tempHealth -= Mathf.Max(damageToTake - charClass.tempDefense , 0);
+        charClass.tempHealth -= Mathf.Max(Mathf.CeilToInt((float)damageToTake / charClass.tempDefense), 1);
     }
     public void IncreaseProf(int whichChar , float xpInrease)
     {
@@ -168,5 +273,67 @@ public class MainCharacter : MonoBehaviour
             // TO DO: activate ability
         }
     }
+    public void UpdateBalanceInfo(string charName, int banOrPick)
+    {
+        for(int i = 0; i < charBalancingList.Count; i++)
+        {
+            if (charBalancingList[i].name == charName)
+            {
+                if(banOrPick == 1)
+                {
+                    var tempBanCount = charBalancingList[i];
+                    tempBanCount.bans++;
+                    charBalancingList[i] = tempBanCount;
+                }
+                if(banOrPick == 2)
+                {
+                    var tempBanCount = charBalancingList[i];
+                    tempBanCount.picks++;
+                    charBalancingList[i] = tempBanCount;
+                }
+            }
+        }
+    }
 
+    #region SettingUpClasses
+    void SetUpClasses()
+    {
+        // Settiing up base characters (will need to add a check later for saved data)
+        CharProfficencies fireDudeObj = new CharProfficencies();
+        fireDudeObj.nameOfClass = listOfClasses[0].name;   // TO DO: make these match with the made scriptable objects names
+        charProf.Add(fireDudeObj);
+
+        CharProfficencies rockGuyObj = new CharProfficencies();
+        rockGuyObj.nameOfClass = listOfClasses[1].name;
+        charProf.Add(rockGuyObj);
+
+        CharProfficencies waterGirl = new CharProfficencies();
+        waterGirl.nameOfClass = listOfClasses[2].name;
+        charProf.Add(waterGirl);
+
+        CharProfficencies grassGuy = new CharProfficencies();
+        grassGuy.nameOfClass = listOfClasses[3].name;
+        charProf.Add(grassGuy);
+
+        CharProfficencies ElectricGuy = new CharProfficencies();
+        ElectricGuy.nameOfClass = listOfClasses[4].name;
+        charProf.Add(ElectricGuy);
+
+        CharProfficencies iceDude = new CharProfficencies();
+        iceDude.nameOfClass = listOfClasses[5].name;
+        charProf.Add(iceDude);
+
+        CharProfficencies assasinDude = new CharProfficencies();
+        assasinDude.nameOfClass = listOfClasses[6].name;
+        charProf.Add(assasinDude);
+
+        CharProfficencies mageGuy = new CharProfficencies();
+        mageGuy.nameOfClass = listOfClasses[7].name;
+        charProf.Add(mageGuy);
+
+        CharProfficencies fighterGuy = new CharProfficencies();
+        fighterGuy.nameOfClass = listOfClasses[8].name;
+        charProf.Add(fighterGuy);
+    }
+    #endregion
 }

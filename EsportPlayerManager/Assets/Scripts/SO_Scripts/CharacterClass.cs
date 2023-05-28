@@ -26,6 +26,7 @@ public class CharacterClass : ScriptableObject
     public Ability abilities;   // if we want to come back and add multiple actives, make this a list
     public PassiveAbility passiveAbility;
     public Class characterClass;
+    public Sprite characterSprite;
 
     public void resetVariables()
     {

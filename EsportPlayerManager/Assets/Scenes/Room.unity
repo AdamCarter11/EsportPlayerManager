@@ -366,9 +366,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89bab57ad39ca0245b47589e95c9ad53, type: 2}
   - {fileID: 11400000, guid: 5df5dfd36d2d04249a0a90e3f1d91dfe, type: 2}
   - {fileID: 11400000, guid: 94c45ae5fc342594daa74748fe50f5e2, type: 2}
+  - {fileID: 11400000, guid: 0bc3efc8731776c41a0630b9fcd8404a, type: 2}
+  - {fileID: 11400000, guid: 13c14e81b5fb2bf4fab71ce6f29ffff0, type: 2}
+  - {fileID: 11400000, guid: 071718843d0a2674f87e94ecaa60cad5, type: 2}
+  - {fileID: 11400000, guid: 0bf0e6ea7710b3642b8d08ee863ec37c, type: 2}
+  - {fileID: 11400000, guid: 87e5e10f4c9b6dd4d95be7b1d65c4733, type: 2}
+  - {fileID: 11400000, guid: c8eab6ae88330f14b80785d70d374909, type: 2}
   charClass: {fileID: 11400000, guid: 89bab57ad39ca0245b47589e95c9ad53, type: 2}
   charactersOnTeam: []
   dayCount: 0
+  seasonLength: 30
+  startCombat: 0
 --- !u!4 &153677532
 Transform:
   m_ObjectHideFlags: 0

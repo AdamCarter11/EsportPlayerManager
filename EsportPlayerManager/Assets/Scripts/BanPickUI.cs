@@ -36,6 +36,21 @@ public class BanPickUI : MonoBehaviour
         enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
         currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
 
+        int i = 0;
+        foreach (Transform childTransform in banPickPanel.transform)
+        {
+            // Access the child object
+            GameObject childObject = childTransform.gameObject;
+            print("Name: " + childObject.name);
+
+            // Check if the child object has the specific component
+            Image component = childObject.GetComponent<Image>();
+            if(component != null && i < playerRef.listOfClasses.Count)
+            {
+                component.sprite = playerRef.listOfClasses[i].characterSprite;
+                i++;
+            }
+        }
     }
 
 
@@ -52,13 +67,15 @@ public class BanPickUI : MonoBehaviour
                 Debug.Log("Ban: Char" + number);
                 isBPable[number] = 1;
                 bpTimes += 1;
+                playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 1); // used to keep track of how many times a char has been banned
             }
             else if (bpPeriod == "Pick")
             {
                 Debug.Log("Pick: Char" + number);
-                isBPable[number] = 1;
+                isBPable[number] = 2;
                 bpTimes += 1;
                 playerRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
+                playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 2); // 2 keeps track of pick rate
             }
         }
         else
@@ -87,7 +104,6 @@ public class BanPickUI : MonoBehaviour
             banPickPanel.SetActive(false);
             character1UI.SetActive(true);
             character2UI.SetActive(true);
-            playerNameText.text = currPlayerChar.name;
             enemyNameText.text = currEnemyChar.name;
             GameObject manaButton = GameObject.Find("ActivatedAbilityButton");
             if(manaButton != null)
@@ -114,6 +130,10 @@ public class BanPickUI : MonoBehaviour
             {
                 Debug.Log("Char " + i + ": " + isBPable[i]);
             }
+            playerRef.swapCharacters();
+            currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
+            playerNameText.text = currPlayerChar.name;
+            character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
         }
     }
 
@@ -133,7 +153,9 @@ public class BanPickUI : MonoBehaviour
     }
     private void SwapButtonHelper()
     {
-        playerNameText.text = currPlayerChar.name;
         playerRef.swapCharacters();
+        currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
+        playerNameText.text = currPlayerChar.name;
+        character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
     }
 }
