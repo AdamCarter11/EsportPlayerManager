@@ -64,6 +64,10 @@ public class BanPickUI : MonoBehaviour
                 {
                     component.color = Color.red;
                 }
+                if(whichMode == 3)
+                {
+                    component.color = Color.white;
+                }
                 i++;
             }
         }
@@ -210,8 +214,13 @@ public class BanPickUI : MonoBehaviour
     {
         bpPeriod = "Ban";
         bpTimes = 0;
+        for (int i = 0; i < 9; i++)
+        {
+            isBPable[i] = 0;
+        }
         banPickPanel.SetActive(true);
         character1UI.SetActive(false);
         character2UI.SetActive(false);
+        UpdateUIImages(3,-1);
     }
 }
