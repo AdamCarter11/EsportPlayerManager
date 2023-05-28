@@ -12,6 +12,8 @@ public class RoomUIManager : MonoBehaviour
     [SerializeField] Slider xpSlider;
     [SerializeField] TMP_Text actionPointText;
     [SerializeField] TMP_Text dayCountText;
+    [SerializeField] int randomEventStartingDay = 1;
+    [SerializeField] GameObject eventObj;
     int actionPoints = 3;
     GameObject playerRef;
     bool activeCharSelect = false;
@@ -21,7 +23,30 @@ public class RoomUIManager : MonoBehaviour
         playerRef = GameObject.FindGameObjectWithTag("MainCharacter");
         actionPointText.text = "Action points: " + actionPoints;
         dayCountText.text = "Days: " + playerRef.GetComponent<MainCharacter>().dayCount;
-        
+        if(playerRef.GetComponent<MainCharacter>().dayCount >= randomEventStartingDay)
+        {
+            // check for random event
+            int rando = Random.Range(0,100);
+            if(rando < 30)
+            {
+                int whichCharRando = Random.Range(0, 9);
+                string tempString = "You watched a video showing some spicy new tricks for: " + playerRef.GetComponent<MainCharacter>().listOfClasses[whichCharRando].name;
+                CharacterSelect(whichCharRando);
+                StartCoroutine(EventCoroutine(tempString));
+                print("Upgraded Character");
+            }
+            else if(rando >= 30 && rando < 60)
+            {
+
+            }
+        }
+    }
+    IEnumerator EventCoroutine(string eventString)
+    {
+        eventObj.SetActive(true);
+        eventObj.transform.GetChild(0).GetComponent<TMP_Text>().text = eventString;
+        yield return new WaitForSeconds(5);
+        eventObj.SetActive(false);
     }
     public void StartGame()
     {
