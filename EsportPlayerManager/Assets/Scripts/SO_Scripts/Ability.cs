@@ -11,8 +11,8 @@ public class Ability : ScriptableObject
     [TextArea(4, 10)]
     public string abilityDesc;
     public int damage;
-    public float cooldown;
-    public float[] decreaseStats = new float[4]; // 3 possible stats
-    public float[] increaseStats = new float[4]; // 3 possible stats
+    public float manaCost;
+    public float[] decreaseStats = new float[4]; // 4 possible stats
+    public float[] increaseStats = new float[4]; // 4 possible stats
     public float damageOverTime;
 }

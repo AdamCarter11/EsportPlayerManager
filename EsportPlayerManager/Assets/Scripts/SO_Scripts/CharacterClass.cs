@@ -18,7 +18,10 @@ public class CharacterClass : ScriptableObject
 
     public int baseDefense;
     [HideInInspector] public int tempDefense;
-    
+
+    [HideInInspector] public float currentMana;
+
+    public int manaIncreaseAmount;
 
     public Ability abilities;   // if we want to come back and add multiple actives, make this a list
     public PassiveAbility passiveAbility;
@@ -30,6 +33,7 @@ public class CharacterClass : ScriptableObject
         tempAttack = baseAttack;
         tempAttackSpeed = baseAttackSpeed;
         tempDefense = baseDefense;
+        currentMana = 0;
         Debug.Log("Reset, attack Speed: " + baseAttackSpeed + " temp attack speed: " + tempAttackSpeed);
     }
 }
