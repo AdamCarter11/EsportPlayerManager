@@ -9,6 +9,8 @@ public class BanPickUI : MonoBehaviour
 {
     private MainCharacter playerRef;
     private CharacterClass currPlayerChar;
+    private MainEnemy enemyRef;
+    private CharacterClass currEnemyChar;
 
     [SerializeField] GameObject banPickPanel;
     [SerializeField] GameObject character1UI, character2UI;
@@ -31,8 +33,9 @@ public class BanPickUI : MonoBehaviour
     {
         playerRef = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<MainCharacter>();
         currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
+        enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
+        currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
 
-        
     }
 
 
@@ -70,10 +73,12 @@ public class BanPickUI : MonoBehaviour
         {
             bpPeriod = "Pick";
             Debug.Log("Char BP status" + isBPable);
+            /*
             for (int i = 0; i < 9; i++)
             {
                 Debug.Log("Char " + i + ": " + isBPable[i]);
             }
+            */
         }
 
         if (bpTimes >= 8)
@@ -83,6 +88,7 @@ public class BanPickUI : MonoBehaviour
             character1UI.SetActive(true);
             character2UI.SetActive(true);
             playerNameText.text = currPlayerChar.name;
+            enemyNameText.text = currEnemyChar.name;
             GameObject manaButton = GameObject.Find("ActivatedAbilityButton");
             if(manaButton != null)
             {
@@ -117,6 +123,8 @@ public class BanPickUI : MonoBehaviour
         {
             playerHealthText.text = "Health: " + currPlayerChar.tempHealth;
             playerManaText.text = "Mana: " + currPlayerChar.currentMana;
+            enemyHealthText.text = "Health: " + currEnemyChar.tempHealth;
+            enemyManaText.text = "Mana: " + currEnemyChar.currentMana;
         }
     }
     private void ActivateAbilityHelper()

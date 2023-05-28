@@ -16,20 +16,28 @@ public class MainEnemy : MonoBehaviour
         switch (charClass.passiveAbility.passiveEffect)
         {
             case passiveAbility.increaseDamagePerAttack:
-                print("increase damage passive");
+                //print("increase damage passive");
                 break;
             case passiveAbility.StrongerLessAllies:
-                print("stronger less allies passive passive");
+                //print("stronger less allies passive passive");
                 break;
         }
-        print("Starting attack: " + charClass.tempAttack);
-        StartCoroutine(AttackTrigger());
+        //print("Starting attack: " + charClass.tempAttack);
+        //StartCoroutine(AttackTrigger());
     }
     private void Update()
     {
+        print("Starting combat, player health: " + playerRef.getCurrentCharacter().tempHealth);
         if (Input.GetKeyDown(KeyCode.A))
         {
             playerRef.changeStats(charClass);
+        }
+        if (playerRef.startCombat)
+        {
+            //print("Starting combat, player health: " + playerRef.getCurrentCharacter().tempHealth);
+            print("enemy started combat");
+            //startCombat = false;
+            StartCoroutine(AttackTrigger());
         }
     }
     IEnumerator AttackTrigger()
@@ -37,6 +45,9 @@ public class MainEnemy : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(charClass.baseAttackSpeed);
+            // deal damage to player
+            playerRef.TakeDamage(charClass.tempAttack);
+
             charClass.currentMana += charClass.manaIncreaseAmount;
             
             switch (charClass.passiveAbility.passiveEffect)
@@ -45,11 +56,15 @@ public class MainEnemy : MonoBehaviour
                     charClass.tempAttack += 1;
                     break;
                 case passiveAbility.StrongerLessAllies:
-                    print("stronger less allies passive passive");
+                    //print("stronger less allies passive passive");
                     break;
             }
             //print(charClass.tempAttackSpeed);
         }
+    }
+    public void TakeDamage(int damageToTake)
+    {
+        charClass.tempHealth -= Mathf.Max(damageToTake - charClass.tempDefense, 0);
     }
     public void changeStats(CharacterClass charClassRef)
     {
@@ -66,5 +81,9 @@ public class MainEnemy : MonoBehaviour
             charClass.currentMana -= charClass.abilities.manaCost;
             // TO DO: activate ability
         }
+    }
+    public CharacterClass getCurrentCharacter()
+    {
+        return charClass;
     }
 }

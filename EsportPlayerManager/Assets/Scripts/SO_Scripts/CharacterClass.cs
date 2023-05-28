@@ -34,6 +34,6 @@ public class CharacterClass : ScriptableObject
         tempAttackSpeed = baseAttackSpeed;
         tempDefense = baseDefense;
         currentMana = 0;
-        Debug.Log("Reset, attack Speed: " + baseAttackSpeed + " temp attack speed: " + tempAttackSpeed);
+        Debug.Log("Reset, health: " + tempHealth);
     }
 }

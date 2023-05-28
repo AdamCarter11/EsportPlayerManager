@@ -62,6 +62,7 @@ public class MainCharacter : MonoBehaviour
 
         // if trained fireDude
         //IncreaseProf(fireDudeObj, .1f);
+        enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -77,6 +78,10 @@ public class MainCharacter : MonoBehaviour
             startCombat = false;
             StartCoroutine(AttackTrigger());
         }
+        if(charClass.tempHealth <= 0)
+        {
+            swapCharacters();
+        }
     }
 
     IEnumerator AttackTrigger()
@@ -84,6 +89,9 @@ public class MainCharacter : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(charClass.baseAttackSpeed);
+            // damage enemy
+            enemyRef.TakeDamage(charClass.tempAttack);
+
             charClass.currentMana += charClass.manaIncreaseAmount;
             switch (charClass.passiveAbility.passiveEffect)
             {
@@ -100,12 +108,27 @@ public class MainCharacter : MonoBehaviour
 
     public void swapCharacters() //CharacterClass whichToSwapTo
     {
+        if(charClass.tempHealth <= 0)
+        {
+            if (charactersOnTeam.Count <= 1)
+            {
+                // game over
+                print("PLAYER LOST");
+            }
+            else
+            {
+                charactersOnTeam.RemoveAt(whichCharacter);
+            }
+        }
         whichCharacter++;
         CharacterClass whichToSwapTo = charactersOnTeam[whichCharacter % 3];
         charClass = whichToSwapTo;
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
-
+    public void TakeDamage(int damageToTake)
+    {
+        charClass.tempHealth -= Mathf.Max(damageToTake - charClass.tempDefense , 0);
+    }
     public void IncreaseProf(int whichChar , float xpInrease)
     {
         CharProfficencies tempCharObj = new CharProfficencies();
