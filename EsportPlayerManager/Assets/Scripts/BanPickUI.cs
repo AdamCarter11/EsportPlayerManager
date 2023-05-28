@@ -83,12 +83,13 @@ public class BanPickUI : MonoBehaviour
                 bpTimes += 1;
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 1); // used to keep track of how many times a char has been banned
                 UpdateUIImages(2, number);
+
+                // enemy ban
                 number = Random.Range(0, 9);
                 while (isBPable[number] != 0)
                 {
                     number = Random.Range(0, 9);
                 }
-
                 Debug.Log("Char BP status" + isBPable);
                 isBPable[number] = 1;
                 bpTimes += 1;
@@ -113,8 +114,9 @@ public class BanPickUI : MonoBehaviour
 
 
 
-        if (bpTimes >= 2)
+        if (bpTimes >= 3)
         {
+            // enemy pick
             number = Random.Range(0,9);
             while(isBPable[number] != 0)
             {
@@ -203,5 +205,13 @@ public class BanPickUI : MonoBehaviour
         playerManaText.text = "Mana: " + currPlayerChar.currentMana;
         enemyHealthText.text = "Health: " + currEnemyChar.tempHealth;
         enemyManaText.text = "Mana: " + currEnemyChar.currentMana;
+    }
+    public void WinLoseCondition()
+    {
+        bpPeriod = "Ban";
+        bpTimes = 0;
+        banPickPanel.SetActive(true);
+        character1UI.SetActive(false);
+        character2UI.SetActive(false);
     }
 }

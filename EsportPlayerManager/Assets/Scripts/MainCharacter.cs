@@ -223,6 +223,7 @@ public class MainCharacter : MonoBehaviour
             {
                 // game over
                 print("PLAYER LOST");
+                //banPickRef.WinLoseCondition();
             }
             else
             {

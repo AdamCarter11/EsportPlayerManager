@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 20313242}
   m_Layer: 0
   m_Name: UIManager
-  m_TagString: Untagged
+  m_TagString: CombatUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charClass: {fileID: 11400000, guid: 89bab57ad39ca0245b47589e95c9ad53, type: 2}
+  charactersOnTeam: []
 --- !u!4 &364665998
 Transform:
   m_ObjectHideFlags: 0

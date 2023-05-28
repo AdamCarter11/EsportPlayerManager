@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MainEnemy
   - MainCharacter
+  - CombatUI
   layers:
   - Default
   - TransparentFX
