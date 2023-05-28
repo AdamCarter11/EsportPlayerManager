@@ -19,7 +19,7 @@ public class BanPickUI : MonoBehaviour
     [SerializeField] TMP_Text playerNameText;
     [SerializeField] TMP_Text enemyNameText;
     [SerializeField] TMP_Text roundsText;
-
+    [SerializeField] List<Image> benchCharImages;
 
     private int bpTimes = 0;
     private string bpPeriod = "Ban";
@@ -27,7 +27,6 @@ public class BanPickUI : MonoBehaviour
     private int[] isBPable = new int [10];
     private Button abilityButton;
     private Button swapButton;
-
 
 
     private void Start()
@@ -108,8 +107,32 @@ public class BanPickUI : MonoBehaviour
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 2); // 2 keeps track of pick rate
                 UpdateUIImages(1, number);
                 bpTimes += 1;
+                UpdateBench();
+
             }
             bpPeriod = "Pick";
+
+            if (bpTimes >= 3)
+            {
+                // enemy pick
+                number = Random.Range(0, 9);
+                while (isBPable[number] != 0)
+                {
+                    number = Random.Range(0, 9);
+                }
+
+                Debug.Log("Char BP status" + isBPable);
+                enemyRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
+                isBPable[number] = 2;
+                bpTimes += 1;
+                UpdateUIImages(1, number);
+                /*
+                for (int i = 0; i < 9; i++)
+                {
+                    Debug.Log("Char " + i + ": " + isBPable[i]);
+                }
+                */
+            }   
         }
         else
         {
@@ -119,27 +142,7 @@ public class BanPickUI : MonoBehaviour
 
 
 
-        if (bpTimes >= 3)
-        {
-            // enemy pick
-            number = Random.Range(0,9);
-            while(isBPable[number] != 0)
-            {
-                number = Random.Range(0, 9);
-            }
-            
-            Debug.Log("Char BP status" + isBPable);
-            enemyRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
-            isBPable[number] = 2;
-            bpTimes += 1;
-            UpdateUIImages(1, number);
-            /*
-            for (int i = 0; i < 9; i++)
-            {
-                Debug.Log("Char " + i + ": " + isBPable[i]);
-            }
-            */
-        }
+        
 
         if (bpTimes >= 8)
         {
@@ -228,4 +231,16 @@ public class BanPickUI : MonoBehaviour
         character2UI.SetActive(false);
         UpdateUIImages(3,-1);
     }
+
+    void UpdateBench()
+    {
+        for (int i=0; i < playerRef.charactersOnTeam.Count; i ++)
+        {
+            benchCharImages[i].GetComponent<Image>().sprite = playerRef.charactersOnTeam[i].characterSprite;
+        }
+       
+
+    }
+
+
 }
