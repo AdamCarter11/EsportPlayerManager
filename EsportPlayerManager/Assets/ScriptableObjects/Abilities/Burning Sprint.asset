@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Burning Sprint
   abilityDesc: You're on fire, RUN!
-  damage: 300
-  manaCost: 50
+  damage: 350
+  manaCost: 90
   decreaseStats:
   - 0
   - 0
@@ -24,6 +24,6 @@ MonoBehaviour:
   increaseStats:
   - 0
   - 0
-  - -0.1
+  - 0.8
   - 0
   damageOverTime: 0

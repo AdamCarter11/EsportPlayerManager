@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea193d33b6d4d014c993e724c651ab19, type: 3}
-  m_Name: Acid Rain
+  m_Name: Water Slash
   m_EditorClassIdentifier: 
-  abilityName: Acid Rain
-  abilityDesc: 
-  damage: 180
-  manaCost: 50
+  abilityName: Water Slash
+  abilityDesc: I used water to shapen my sword!
+  damage: 200
+  manaCost: 70
   decreaseStats:
   - 0
   - 0
-  - 3
+  - 0
   - 0
   increaseStats:
   - 0

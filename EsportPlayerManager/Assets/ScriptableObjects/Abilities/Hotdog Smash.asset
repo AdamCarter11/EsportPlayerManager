@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Hotdog Smash
   abilityDesc: Set the enemy on fire (1 true damage/s)
-  damage: 250
-  manaCost: 90
+  damage: 300
+  manaCost: 85
   decreaseStats:
   - 0
   - 0

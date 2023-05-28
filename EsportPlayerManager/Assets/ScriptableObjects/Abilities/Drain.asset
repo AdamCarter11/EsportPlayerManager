@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Drain
   abilityDesc: 
-  damage: 150
-  manaCost: 80
+  damage: 200
+  manaCost: 50
   decreaseStats:
   - 0
   - 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   - 0
   increaseStats:
   - 0
-  - 10
   - 0
-  - 10
+  - 0
+  - 3
   damageOverTime: 0
