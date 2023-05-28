@@ -8,6 +8,10 @@ public class MainEnemy : MonoBehaviour
     private MainCharacter playerRef;
     public List<CharacterClass> charactersOnTeam;
     bool enemyStartCombat = false;
+    int whichCharacter = 0;
+    [HideInInspector] public bool resetHealth;
+    BanPickUI banPickRef;
+    bool canEnemySwap = true;
 
     private void Start()
     {
@@ -24,6 +28,7 @@ public class MainEnemy : MonoBehaviour
                 //print("stronger less allies passive passive");
                 break;
         }
+        banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
         //print("Starting attack: " + charClass.tempAttack);
         //StartCoroutine(AttackTrigger());
     }
@@ -59,8 +64,13 @@ public class MainEnemy : MonoBehaviour
             yield return new WaitForSeconds(charClass.baseAttackSpeed);
             // deal damage to player
             playerRef.TakeDamage(charClass.tempAttack);
-
+            ActivateAbility();
             charClass.currentMana += charClass.manaIncreaseAmount;
+            if(charClass.tempHealth <= 10f && canEnemySwap)
+            {
+                StartCoroutine(EnemySwapCoolDown());
+                swapCharacters();
+            }
             
             switch (charClass.passiveAbility.passiveEffect)
             {
@@ -73,6 +83,12 @@ public class MainEnemy : MonoBehaviour
             }
             //print(charClass.tempAttackSpeed);
         }
+    }
+    IEnumerator EnemySwapCoolDown()
+    {
+        canEnemySwap = false;
+        yield return new WaitForSeconds(3f);
+        canEnemySwap = true;
     }
     public void TakeDamage(int damageToTake)
     {
@@ -97,5 +113,53 @@ public class MainEnemy : MonoBehaviour
     public CharacterClass getCurrentCharacter()
     {
         return charClass;
+    }
+    public void ActivateAbility()
+    {
+        if (charClass.currentMana >= charClass.abilities.manaCost)
+        {
+            print("Activated ENEMY ability!");
+            charClass.currentMana -= charClass.abilities.manaCost;
+            // TO DO: activate ability
+        }
+    }
+    public void swapCharacters() //CharacterClass whichToSwapTo
+    {
+        CharacterClass whichToSwapTo;
+        if (charClass.tempHealth <= 0)
+        {
+            if (charactersOnTeam.Count <= 1 && resetHealth)
+            {
+                // game over
+                print("PLAYER LOST");
+                resetHealth = false;
+                charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                foreach (CharacterClass tempChar in playerRef.listOfClasses)
+                {
+                    tempChar.resetVariables();
+                }
+                StopCoroutine(AttackTrigger());
+                playerRef.StopAttacking();
+                banPickRef.WinLoseCondition();
+                playerRef.ChangeRound(0);
+            }
+            else
+            {
+                charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                whichToSwapTo = charactersOnTeam[whichCharacter % charactersOnTeam.Count];
+                charClass = whichToSwapTo;
+            }
+        }
+        else
+        {
+            whichCharacter++;
+            print("Which char: " + whichCharacter % charactersOnTeam.Count);
+            whichToSwapTo = charactersOnTeam[whichCharacter % charactersOnTeam.Count];
+            charClass = whichToSwapTo;
+        }
+
+        banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
+        banPickRef.UpdateUI();
+        print("current ENEMY character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
 }

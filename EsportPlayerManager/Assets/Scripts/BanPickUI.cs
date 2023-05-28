@@ -174,6 +174,7 @@ public class BanPickUI : MonoBehaviour
                 Debug.Log("Char " + i + ": " + isBPable[i]);
             }
             playerRef.swapCharacters();
+            enemyRef.swapCharacters();
             currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
             playerNameText.text = currPlayerChar.name;
             character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
@@ -204,7 +205,9 @@ public class BanPickUI : MonoBehaviour
     public void UpdateUI()
     {
         currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
+        currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
         playerNameText.text = currPlayerChar.name;
+        enemyNameText.text = currEnemyChar.name;
         character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
         playerHealthText.text = "Health: " + currPlayerChar.tempHealth;
         playerManaText.text = "Mana: " + currPlayerChar.currentMana;

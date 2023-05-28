@@ -105,6 +105,11 @@ public class MainCharacter : MonoBehaviour
         }
         SeasonBalancing();
     }
+    public void StopAttacking()
+    {
+        //StopCoroutine(AttackTrigger());
+        StopAllCoroutines();
+    }
     public void ChangeRound(int changeWinVal)
     {
         combatRounds++;
@@ -325,7 +330,7 @@ public class MainCharacter : MonoBehaviour
     {
         if (charClass.currentMana >= charClass.abilities.manaCost)
         {
-            print("Activated ability!");
+            print("Activated PLAYER ability!");
             charClass.currentMana -= charClass.abilities.manaCost;
             // TO DO: activate ability
         }
