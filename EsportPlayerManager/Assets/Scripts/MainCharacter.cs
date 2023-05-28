@@ -217,23 +217,30 @@ public class MainCharacter : MonoBehaviour
 
     public void swapCharacters() //CharacterClass whichToSwapTo
     {
-        if(charClass.tempHealth <= 0)
+        CharacterClass whichToSwapTo;
+        if (charClass.tempHealth <= 0)
         {
             if (charactersOnTeam.Count <= 1)
             {
                 // game over
                 print("PLAYER LOST");
-                //banPickRef.WinLoseCondition();
+                banPickRef.WinLoseCondition();
             }
             else
             {
-                charactersOnTeam.RemoveAt(whichCharacter % 3);
+                charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                whichToSwapTo = charactersOnTeam[whichCharacter % charactersOnTeam.Count];
+                charClass = whichToSwapTo;
             }
         }
-        whichCharacter++;
-        print("Which char: " + whichCharacter % 3);
-        CharacterClass whichToSwapTo = charactersOnTeam[whichCharacter % 3];
-        charClass = whichToSwapTo;
+        else
+        {
+            whichCharacter++;
+            print("Which char: " + whichCharacter % charactersOnTeam.Count);
+            whichToSwapTo = charactersOnTeam[whichCharacter % charactersOnTeam.Count];
+            charClass = whichToSwapTo;
+        }
+        
         banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
         banPickRef.UpdateUI();
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
