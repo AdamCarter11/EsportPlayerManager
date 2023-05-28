@@ -6,6 +6,7 @@ public class MainEnemy : MonoBehaviour
 {
     [SerializeField] CharacterClass charClass;
     private MainCharacter playerRef;
+    public List<CharacterClass> charactersOnTeam;
 
     private void Start()
     {

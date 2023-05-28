@@ -36,6 +36,11 @@ public class BanPickUI : MonoBehaviour
         enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
         currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
 
+        UpdateUIImages(0, -1);
+    }
+
+    void UpdateUIImages(int whichMode, int whichSprite)
+    {
         int i = 0;
         foreach (Transform childTransform in banPickPanel.transform)
         {
@@ -45,15 +50,24 @@ public class BanPickUI : MonoBehaviour
 
             // Check if the child object has the specific component
             Image component = childObject.GetComponent<Image>();
-            if(component != null && i < playerRef.listOfClasses.Count)
+            if (component != null && i < playerRef.listOfClasses.Count)
             {
-                component.sprite = playerRef.listOfClasses[i].characterSprite;
+                if(whichMode == 0)
+                {
+                    component.sprite = playerRef.listOfClasses[i].characterSprite;
+                }
+                if(whichMode == 1 && i == whichSprite)
+                {
+                    component.color = Color.gray;
+                }
+                if (whichMode == 2 && i == whichSprite)
+                {
+                    component.color = Color.red;
+                }
                 i++;
             }
         }
     }
-
-
 
     public void BanPickChar(int number)
     {
@@ -68,15 +82,28 @@ public class BanPickUI : MonoBehaviour
                 isBPable[number] = 1;
                 bpTimes += 1;
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 1); // used to keep track of how many times a char has been banned
+                UpdateUIImages(2, number);
+                number = Random.Range(0, 9);
+                while (isBPable[number] != 0)
+                {
+                    number = Random.Range(0, 9);
+                }
+
+                Debug.Log("Char BP status" + isBPable);
+                isBPable[number] = 1;
+                bpTimes += 1;
+                UpdateUIImages(2, number);
             }
             else if (bpPeriod == "Pick")
             {
                 Debug.Log("Pick: Char" + number);
                 isBPable[number] = 2;
-                bpTimes += 1;
                 playerRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 2); // 2 keeps track of pick rate
+                UpdateUIImages(1, number);
+                bpTimes += 1;
             }
+            bpPeriod = "Pick";
         }
         else
         {
@@ -88,8 +115,17 @@ public class BanPickUI : MonoBehaviour
 
         if (bpTimes >= 2)
         {
-            bpPeriod = "Pick";
+            number = Random.Range(0,9);
+            while(isBPable[number] != 0)
+            {
+                number = Random.Range(0, 9);
+            }
+            
             Debug.Log("Char BP status" + isBPable);
+            enemyRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
+            isBPable[number] = 2;
+            bpTimes += 1;
+            UpdateUIImages(1, number);
             /*
             for (int i = 0; i < 9; i++)
             {

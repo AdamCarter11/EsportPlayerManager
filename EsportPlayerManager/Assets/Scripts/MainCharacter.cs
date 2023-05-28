@@ -230,6 +230,7 @@ public class MainCharacter : MonoBehaviour
             }
         }
         whichCharacter++;
+        print("Which char: " + whichCharacter % 3);
         CharacterClass whichToSwapTo = charactersOnTeam[whichCharacter % 3];
         charClass = whichToSwapTo;
         banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
