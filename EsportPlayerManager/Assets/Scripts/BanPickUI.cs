@@ -158,4 +158,14 @@ public class BanPickUI : MonoBehaviour
         playerNameText.text = currPlayerChar.name;
         character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
     }
+    public void UpdateUI()
+    {
+        currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
+        playerNameText.text = currPlayerChar.name;
+        character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
+        playerHealthText.text = "Health: " + currPlayerChar.tempHealth;
+        playerManaText.text = "Mana: " + currPlayerChar.currentMana;
+        enemyHealthText.text = "Health: " + currEnemyChar.tempHealth;
+        enemyManaText.text = "Mana: " + currEnemyChar.currentMana;
+    }
 }

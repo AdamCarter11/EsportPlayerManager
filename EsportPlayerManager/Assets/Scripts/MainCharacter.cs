@@ -38,6 +38,7 @@ public class MainCharacter : MonoBehaviour
     bool tempSwapBool = true;
     [HideInInspector] public bool startCombat;  // called from the banPick script to start combat
     int whichCharacter = 0;
+    BanPickUI banPickRef;
 
     private void Awake()
     {
@@ -81,7 +82,9 @@ public class MainCharacter : MonoBehaviour
         if(scene.name == "CombatScene")
         {
             enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
+            banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
         }
+        
     }
     private void Update()
     {
@@ -92,6 +95,7 @@ public class MainCharacter : MonoBehaviour
         }
         if(charClass.tempHealth <= 0)
         {
+            print("character death");
             swapCharacters();
         }
         SeasonBalancing();
@@ -222,12 +226,14 @@ public class MainCharacter : MonoBehaviour
             }
             else
             {
-                charactersOnTeam.RemoveAt(whichCharacter);
+                charactersOnTeam.RemoveAt(whichCharacter % 3);
             }
         }
         whichCharacter++;
         CharacterClass whichToSwapTo = charactersOnTeam[whichCharacter % 3];
         charClass = whichToSwapTo;
+        banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
+        banPickRef.UpdateUI();
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
     public void TakeDamage(int damageToTake)
