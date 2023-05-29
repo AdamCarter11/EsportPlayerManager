@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: ToastcCharacter
   m_EditorClassIdentifier: 
   characterName: Toast
-  baseHealth: 60
+  baseHealth: 110
   tempHealth: 60
-  baseAttack: 70
+  baseAttack: 80
   tempAttack: 70
-  baseAttackSpeed: 0.8
+  baseAttackSpeed: 0.9
   tempAttackSpeed: 0.8
   baseDefense: 10
   tempDefense: 10
   currentMana: 0
-  manaIncreaseAmount: 5
-  abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
+  manaIncreaseAmount: 12
+  abilities: {fileID: 11400000, guid: acc94c6212a112942be590c9022796c7, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: 2bcab5027292d854e9c461c9012855f6, type: 2}
   characterSprite: {fileID: 21300000, guid: a31c628cad2adc64d94ace90040b02d4, type: 3}

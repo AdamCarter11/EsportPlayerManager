@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: SeaCat
   m_EditorClassIdentifier: 
   characterName: cat
-  baseHealth: 80
-  tempHealth: 80
-  baseAttack: 500
+  baseHealth: 125
+  tempHealth: -148
+  baseAttack: 95
   tempAttack: 500
-  baseAttackSpeed: 0.5
+  baseAttackSpeed: 1
   tempAttackSpeed: 0.5
   baseDefense: 10
   tempDefense: 10
   currentMana: 0
-  manaIncreaseAmount: 2
-  abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
+  manaIncreaseAmount: 8
+  abilities: {fileID: 11400000, guid: 6c2cd592f69b0b249b2deef51af70167, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: b5e1ba949fb07d44ea7d38a22729025b, type: 2}
   characterSprite: {fileID: 21300000, guid: ee4930219a846754891679ed18187708, type: 3}

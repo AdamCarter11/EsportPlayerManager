@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2330018aeb3a72d45a3cdf48f2b2933d, type: 3}
   m_Name: Snake
   m_EditorClassIdentifier: 
-  characterName: Mage dude
-  baseHealth: 70
+  characterName: Snake
+  baseHealth: 95
   tempHealth: 70
-  baseAttack: 30
+  baseAttack: 80
   tempAttack: 30
-  baseAttackSpeed: 1
+  baseAttackSpeed: 0.8
   tempAttackSpeed: 1
   baseDefense: 10
   tempDefense: 10
   currentMana: 0
-  manaIncreaseAmount: 3
-  abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
+  manaIncreaseAmount: 10
+  abilities: {fileID: 11400000, guid: 2e27477d6d6d0e64dbec5532f5100b64, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: f42c11ae4fcc7c24f9ed4d7b6e6dbd9c, type: 2}
   characterSprite: {fileID: 21300000, guid: 577246f9cf3dc964b82e00ce79675f66, type: 3}

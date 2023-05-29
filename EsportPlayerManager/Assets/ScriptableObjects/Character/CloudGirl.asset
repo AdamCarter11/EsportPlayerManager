@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: CloudGirl
   m_EditorClassIdentifier: 
   characterName: WaterGirl
-  baseHealth: 90
+  baseHealth: 105
   tempHealth: 90
-  baseAttack: 70
+  baseAttack: 80
   tempAttack: 70
   baseAttackSpeed: 1
   tempAttackSpeed: 1
   baseDefense: 10
   tempDefense: 10
   currentMana: 0
-  manaIncreaseAmount: 7
+  manaIncreaseAmount: 12
   abilities: {fileID: 11400000, guid: f885714e626eb664493ffdfc017b7aad, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: 6e1772edb15100c4cb2b8fa373336252, type: 2}

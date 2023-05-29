@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Penguin
   m_EditorClassIdentifier: 
   characterName: Penguin Rogue
-  baseHealth: 80
+  baseHealth: 100
   tempHealth: 80
-  baseAttack: 500
+  baseAttack: 80
   tempAttack: 500
   baseAttackSpeed: 0.8
   tempAttackSpeed: 0.8
-  baseDefense: 40
+  baseDefense: 9
   tempDefense: 40
   currentMana: 0
-  manaIncreaseAmount: 12
+  manaIncreaseAmount: 10
   abilities: {fileID: 11400000, guid: d10a7d0ea561864439dfd63a37096037, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: 603e76ad173c2d24aa7dc3111837151b, type: 2}

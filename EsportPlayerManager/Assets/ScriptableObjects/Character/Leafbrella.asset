@@ -15,14 +15,14 @@ MonoBehaviour:
   characterName: Leafbrella
   baseHealth: 120
   tempHealth: 120
-  baseAttack: 20
+  baseAttack: 80
   tempAttack: 20
   baseAttackSpeed: 1
   tempAttackSpeed: 1
-  baseDefense: 10
+  baseDefense: 12
   tempDefense: 10
   currentMana: 0
-  manaIncreaseAmount: 3
+  manaIncreaseAmount: 12
   abilities: {fileID: 11400000, guid: 88e0232b0c27d4a4d808c780437c5ace, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
   characterClass: {fileID: 11400000, guid: f3cd83b6a4b7b904887217b521167a45, type: 2}

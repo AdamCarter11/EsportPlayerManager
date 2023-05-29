@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Hedeghog
   m_EditorClassIdentifier: 
   characterName: Hedgehog Berserker
-  baseHealth: 200
+  baseHealth: 130
   tempHealth: 200
-  baseAttack: 50
+  baseAttack: 90
   tempAttack: 50
   baseAttackSpeed: 1
   tempAttackSpeed: 1
-  baseDefense: 10
+  baseDefense: 12
   tempDefense: 10
   currentMana: 0
   manaIncreaseAmount: 8

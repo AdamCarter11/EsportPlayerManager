@@ -23,7 +23,7 @@ MonoBehaviour:
   - 0
   increaseStats:
   - 0
-  - 0
+  - -20
   - 0
   - 0
   damageOverTime: 0

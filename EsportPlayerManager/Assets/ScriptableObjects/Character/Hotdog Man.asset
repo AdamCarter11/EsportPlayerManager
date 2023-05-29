@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Hotdog Man
   m_EditorClassIdentifier: 
   characterName: Hotdog Man
-  baseHealth: 100
-  tempHealth: 120
+  baseHealth: 140
+  tempHealth: 100
   baseAttack: 100
-  tempAttack: 50
+  tempAttack: 120
   baseAttackSpeed: 1
   tempAttackSpeed: 1
   baseDefense: 10
-  tempDefense: 60
-  currentMana: 0
+  tempDefense: 10
+  currentMana: 75
   manaIncreaseAmount: 8
   abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
