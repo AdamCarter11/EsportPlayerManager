@@ -21,6 +21,10 @@ public class BanPickUI : MonoBehaviour
     [SerializeField] TMP_Text roundsText;
     [SerializeField] List<Image> benchCharImages;
     [SerializeField] List<Image> enemyBenchCharImages;
+    [SerializeField] List<Text> benchHpText;
+    [SerializeField] List<Text> benchManaText;
+    [SerializeField] List<Text> enemyBenchHpText;
+    [SerializeField] List<Text> enemyBenchManaText;
 
 
     private int bpTimes = 0;
@@ -192,7 +196,31 @@ public class BanPickUI : MonoBehaviour
             enemyHealthText.text = "Health: " + currEnemyChar.tempHealth;
             enemyManaText.text = "Mana: " + currEnemyChar.currentMana;
         }
+
+
+        for (int i=0; i<playerRef.charactersOnTeam.Count; i ++)
+        {
+            benchHpText[i].text = "Health: " + playerRef.charactersOnTeam[i].tempHealth;
+            benchManaText[i].text = "Mana: " + playerRef.charactersOnTeam[i].currentMana;
+
+            /*
+            healthSlider = benchCharImages[i].GetComponent<Slider>();
+            healthSlider.maxValue = playerRef.charactersOnTeam[i].baseHealth;
+            healthSlider.value = playerRef.charactersOnTeam[i].tempHealth;
+            */
+        }
+
+        for (int i = 0; i < enemyRef.charactersOnTeam.Count; i++)
+        {
+            enemyBenchHpText[i].text = "Health: " + enemyRef.charactersOnTeam[i].tempHealth;
+            enemyBenchManaText[i].text = "Mana: " + enemyRef.charactersOnTeam[i].currentMana;
+
+        }
+
     }
+
+
+
     private void ActivateAbilityHelper()
     {
         playerRef.ActivateAbility();
