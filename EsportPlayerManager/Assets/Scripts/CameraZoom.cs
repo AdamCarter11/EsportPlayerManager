@@ -84,7 +84,7 @@ public class CameraZoom : MonoBehaviour
         Camera.main.orthographicSize = targetOrthographicSize;
         SceneManager.LoadScene("CombatScene");
         // Reset the camera's position to the original position
-        transform.position = originalPosition;
+        //transform.position = originalPosition;
     }
 
     private Vector3 CalculateNewPosition(Vector3 targetPosition, float orthographicSize)

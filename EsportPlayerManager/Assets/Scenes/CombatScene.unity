@@ -186,6 +186,7 @@ MonoBehaviour:
   - {fileID: 234856896}
   - {fileID: 827180803}
   - {fileID: 721586140}
+  bpTimes: 0
 --- !u!4 &20313243
 Transform:
   m_ObjectHideFlags: 0

@@ -94,6 +94,7 @@ public class MainCharacter : MonoBehaviour
     {
         if (startCombat)
         {
+            print("Starting combat");
             startCombat = false;
             resetHealth = true;
             enemyRef.SwitchEnemyToAttack();
@@ -113,6 +114,8 @@ public class MainCharacter : MonoBehaviour
     }
     public void ChangeRound(int changeWinVal)
     {
+        enemyRef.StopAttacking();
+        StopAllCoroutines();
         combatRounds++;
         wins += changeWinVal;
 

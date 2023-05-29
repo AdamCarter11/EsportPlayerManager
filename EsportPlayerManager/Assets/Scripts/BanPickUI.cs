@@ -176,6 +176,7 @@ public class BanPickUI : MonoBehaviour
             currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
             playerNameText.text = currPlayerChar.name;
             character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
+            character2UI.GetComponent<Image>().sprite = currEnemyChar.characterSprite;
         }
     }
 
@@ -258,6 +259,7 @@ public class BanPickUI : MonoBehaviour
         currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
         playerNameText.text = currPlayerChar.name;
         character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
+        character2UI.GetComponent<Image>().sprite = currEnemyChar.characterSprite;
     }
     public void UpdateUI()
     {
@@ -266,6 +268,7 @@ public class BanPickUI : MonoBehaviour
         playerNameText.text = currPlayerChar.name;
         enemyNameText.text = currEnemyChar.name;
         character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
+        character2UI.GetComponent<Image>().sprite = currEnemyChar.characterSprite;
         playerHealthText.text = "Health: " + currPlayerChar.tempHealth;
         playerManaText.text = "Mana: " + currPlayerChar.currentMana;
         enemyHealthText.text = "Health: " + currEnemyChar.tempHealth;
