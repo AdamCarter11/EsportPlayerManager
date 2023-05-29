@@ -36,7 +36,7 @@ public class MainCharacter : MonoBehaviour
     [SerializeField] int seasonLength = 30;
     int startingSeasonLength;
 
-    bool tempSwapBool = true;
+    //bool tempSwapBool = true;
     [HideInInspector] public bool startCombat;  // called from the banPick script to start combat
     [HideInInspector] public bool resetHealth;
     int whichCharacter = 0;

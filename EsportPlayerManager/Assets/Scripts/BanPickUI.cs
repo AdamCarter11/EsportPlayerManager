@@ -153,6 +153,7 @@ public class BanPickUI : MonoBehaviour
             if(manaButton != null)
             {
                 abilityButton = manaButton.GetComponent<Button>();
+                abilityButton.transform.GetChild(0).GetComponent<TMP_Text>().text = currPlayerChar.abilities.name;
                 abilityButton.onClick.AddListener(ActivateAbilityHelper);
             }
             else
@@ -260,11 +261,13 @@ public class BanPickUI : MonoBehaviour
         playerNameText.text = currPlayerChar.name;
         character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
         character2UI.GetComponent<Image>().sprite = currEnemyChar.characterSprite;
+        abilityButton.transform.GetChild(0).GetComponent<TMP_Text>().text = currPlayerChar.abilities.name;
     }
     public void UpdateUI()
     {
         currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
         currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
+        abilityButton.transform.GetChild(0).GetComponent<TMP_Text>().text = currPlayerChar.abilities.name;
         playerNameText.text = currPlayerChar.name;
         enemyNameText.text = currEnemyChar.name;
         character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;
