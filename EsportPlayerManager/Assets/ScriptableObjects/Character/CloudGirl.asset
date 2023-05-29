@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2330018aeb3a72d45a3cdf48f2b2933d, type: 3}
-  m_Name: FireCharacter
+  m_Name: CloudGirl
   m_EditorClassIdentifier: 
-  characterName: FireCharacter
-  baseHealth: 80
-  tempHealth: 80
-  baseAttack: 10
-  tempAttack: 10
-  baseAttackSpeed: 0.5
-  tempAttackSpeed: 0.5
-  baseDefense: 10
-  tempDefense: 10
+  characterName: WaterGirl
+  baseHealth: 90
+  tempHealth: 90
+  baseAttack: 70
+  tempAttack: 70
+  baseAttackSpeed: 1
+  tempAttackSpeed: 1
+  baseDefense: 50
+  tempDefense: 50
   currentMana: 0
-  manaIncreaseAmount: 2
-  abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
+  manaIncreaseAmount: 7
+  abilities: {fileID: 11400000, guid: f885714e626eb664493ffdfc017b7aad, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
-  characterClass: {fileID: 0}
-  characterSprite: {fileID: 21300000, guid: 29a0bc78a0d9dcd4a9534dde31f9ad6c, type: 3}
+  characterClass: {fileID: 11400000, guid: 6e1772edb15100c4cb2b8fa373336252, type: 2}
+  characterSprite: {fileID: 21300000, guid: 29054a6565f4cc64a82601a0ca33eb84, type: 3}

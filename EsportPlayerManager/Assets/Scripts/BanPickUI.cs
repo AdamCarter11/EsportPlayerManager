@@ -20,6 +20,8 @@ public class BanPickUI : MonoBehaviour
     [SerializeField] TMP_Text enemyNameText;
     [SerializeField] TMP_Text roundsText;
     [SerializeField] List<Image> benchCharImages;
+    [SerializeField] List<Image> enemyBenchCharImages;
+
 
     private int bpTimes = 0;
     private string bpPeriod = "Ban";
@@ -107,10 +109,10 @@ public class BanPickUI : MonoBehaviour
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 2); // 2 keeps track of pick rate
                 UpdateUIImages(1, number);
                 bpTimes += 1;
-                UpdateBench();
 
             }
             bpPeriod = "Pick";
+
 
             if (bpTimes >= 3)
             {
@@ -139,10 +141,7 @@ public class BanPickUI : MonoBehaviour
             Debug.Log("char:" + number + "is already b/p");
             
         }
-
-
-
-        
+        UpdateBench();
 
         if (bpTimes >= 8)
         {
@@ -236,10 +235,16 @@ public class BanPickUI : MonoBehaviour
     {
         for (int i=0; i < playerRef.charactersOnTeam.Count; i ++)
         {
+            benchCharImages[i].gameObject.SetActive(true);
             benchCharImages[i].GetComponent<Image>().sprite = playerRef.charactersOnTeam[i].characterSprite;
+            
         }
-       
 
+        for (int i = 0; i < enemyRef.charactersOnTeam.Count; i++)
+        {
+            enemyBenchCharImages[i].gameObject.SetActive(true);
+            enemyBenchCharImages[i].GetComponent<Image>().sprite = enemyRef.charactersOnTeam[i].characterSprite;
+        }
     }
 
 

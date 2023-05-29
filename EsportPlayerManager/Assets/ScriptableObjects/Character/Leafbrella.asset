@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Leafbrella
   baseHealth: 120
-  tempHealth: 0
+  tempHealth: 120
   baseAttack: 20
-  tempAttack: 0
+  tempAttack: 20
   baseAttackSpeed: 1
-  tempAttackSpeed: 0
+  tempAttackSpeed: 1
   baseDefense: 50
-  tempDefense: 0
+  tempDefense: 50
   currentMana: 0
   manaIncreaseAmount: 3
   abilities: {fileID: 11400000, guid: 88e0232b0c27d4a4d808c780437c5ace, type: 2}
   passiveAbility: {fileID: 11400000, guid: e5601adffdb7d9d4c8ae733cb6a787b6, type: 2}
-  characterClass: {fileID: 0}
-  characterSprite: {fileID: 21300000, guid: 29a0bc78a0d9dcd4a9534dde31f9ad6c, type: 3}
+  characterClass: {fileID: 11400000, guid: f3cd83b6a4b7b904887217b521167a45, type: 2}
+  characterSprite: {fileID: 21300000, guid: d3b1d9b1f28f73843acf355a867979a9, type: 3}
