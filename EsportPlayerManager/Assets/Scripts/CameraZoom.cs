@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraZoom : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class CameraZoom : MonoBehaviour
         }
     }
 
-    private void ToggleZoom()
+    public void ToggleZoom()
     {
         if (isZoomed)
         {
@@ -81,7 +82,7 @@ public class CameraZoom : MonoBehaviour
 
         // Ensure the camera's orthographic size is set to the target value
         Camera.main.orthographicSize = targetOrthographicSize;
-
+        SceneManager.LoadScene("CombatScene");
         // Reset the camera's position to the original position
         transform.position = originalPosition;
     }

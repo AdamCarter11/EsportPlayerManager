@@ -16,6 +16,7 @@ public class RoomUIManager : MonoBehaviour
     [SerializeField] int randomEventStartingDay = 1;
     [SerializeField] GameObject eventObj;
     [SerializeField] AudioSource eventSfx, badEventSfx;
+    [SerializeField] CameraZoom camZoomFunc;
     int actionPoints = 3;
     GameObject playerRef;
     bool activeCharSelect = false;
@@ -86,7 +87,8 @@ public class RoomUIManager : MonoBehaviour
     public void StartGame()
     {
         playerRef.GetComponent<MainCharacter>().dayCount++;
-        SceneManager.LoadScene("CombatScene");
+        camZoomFunc.ToggleZoom();
+        //SceneManager.LoadScene("CombatScene");
     }
     public void OpenCloseCharSelect()
     {
