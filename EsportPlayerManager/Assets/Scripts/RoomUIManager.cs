@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.PackageManager;
 
 public class RoomUIManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class RoomUIManager : MonoBehaviour
     [SerializeField] TMP_Text dayCountText;
     [SerializeField] int randomEventStartingDay = 1;
     [SerializeField] GameObject eventObj;
+    [SerializeField] AudioSource eventSfx, badEventSfx;
     int actionPoints = 3;
     GameObject playerRef;
     bool activeCharSelect = false;
@@ -34,6 +36,7 @@ public class RoomUIManager : MonoBehaviour
                 string tempString = "You watched a video showing some spicy new tricks for " + playerRef.GetComponent<MainCharacter>().listOfClasses[whichCharRando].name;
                 eventUpgrade = true;
                 CharacterSelect(whichCharRando);
+                eventSfx.Play();
                 StartCoroutine(EventCoroutine(tempString, 5));
                 print("Upgraded Character");
             }
@@ -52,6 +55,7 @@ public class RoomUIManager : MonoBehaviour
                 string tempString = "You got distracted by some pizza that appeared in your room and lost some valuable training time";
                 actionPoints -= 2;
                 actionPointText.text = "Action points: " + actionPoints;
+                badEventSfx.Play();
                 StartCoroutine(EventCoroutine(tempString, 5));
             }
             else if (rando >= 55 && rando < 65)
@@ -59,6 +63,7 @@ public class RoomUIManager : MonoBehaviour
                 string tempString = "You decided to try and touch grass. It didn't go well";
                 actionPoints--;
                 actionPointText.text = "Action points: " + actionPoints;
+                badEventSfx.Play();
                 StartCoroutine(EventCoroutine(tempString, 5));
             }
             else if (rando >= 65 && rando < 70)
@@ -66,6 +71,7 @@ public class RoomUIManager : MonoBehaviour
                 string tempString = "You found the golden duck! You feel extra motivated today";
                 actionPoints += 5;
                 actionPointText.text = "Action points: " + actionPoints;
+                eventSfx.Play();
                 StartCoroutine(EventCoroutine(tempString, 5));
             }
         }
