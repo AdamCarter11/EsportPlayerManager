@@ -128,6 +128,12 @@ public class MainEnemy : MonoBehaviour
             print("Activated ENEMY ability!");
             charClass.currentMana -= charClass.abilities.manaCost;
             // TO DO: activate ability
+            // reduce enemy health by ability damage
+            playerRef.getCurrentCharacter().tempHealth -= charClass.abilities.damage;
+            // change enemy stats by ability
+            playerRef.changeStats(charClass);
+            // buff yourself
+            changeStats(charClass);
         }
     }
     public void swapCharacters() //CharacterClass whichToSwapTo

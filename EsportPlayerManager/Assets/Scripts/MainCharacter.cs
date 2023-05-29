@@ -347,6 +347,12 @@ public class MainCharacter : MonoBehaviour
             print("Activated PLAYER ability!");
             charClass.currentMana -= charClass.abilities.manaCost;
             // TO DO: activate ability
+            // reduce enemy health by ability damage
+            enemyRef.getCurrentCharacter().tempHealth -= charClass.abilities.damage;
+            // change enemy stats by ability
+            enemyRef.changeStats(charClass);
+            // buff yourself
+            changeStats(charClass);
         }
     }
     public void UpdateBalanceInfo(string charName, int banOrPick)
