@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: Penguin Rogue
   baseHealth: 80
   tempHealth: 80
-  baseAttack: 110
-  tempAttack: 110
+  baseAttack: 500
+  tempAttack: 500
   baseAttackSpeed: 0.8
   tempAttackSpeed: 0.8
   baseDefense: 40

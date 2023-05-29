@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: cat
   baseHealth: 80
   tempHealth: 80
-  baseAttack: 10
-  tempAttack: 10
+  baseAttack: 500
+  tempAttack: 500
   baseAttackSpeed: 0.5
   tempAttackSpeed: 0.5
   baseDefense: 10

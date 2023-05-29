@@ -31,6 +31,7 @@ public class MainCharacter : MonoBehaviour
     List<CharProfficencies> charProf = new List<CharProfficencies>();   // a list of our champions profficencies
     List<CharBalancing> charBalancingList = new List<CharBalancing>();   // a list of our champions profficencies
     private MainEnemy enemyRef;
+
     [HideInInspector] public int dayCount;
     [SerializeField] int seasonLength = 30;
     int startingSeasonLength;
@@ -114,10 +115,18 @@ public class MainCharacter : MonoBehaviour
     {
         combatRounds++;
         wins += changeWinVal;
+
+        banPickRef.DisableBenchUI();
+
         foreach (CharacterClass tempChar in listOfClasses)
         {
             tempChar.resetVariables();
+            print("reset: " + tempChar.characterName);
         }
+        charactersOnTeam.Clear();
+
+        enemyRef.charactersOnTeam.Clear();
+
         if (combatRounds >= 4)
         {
             // end combat
@@ -130,6 +139,7 @@ public class MainCharacter : MonoBehaviour
                 // enemy won
             }
             SceneManager.LoadScene("Room");
+            banPickRef.bpTimes = 0;
             combatRounds = 0;
             dayCount++;
             wins = 0;
@@ -263,14 +273,15 @@ public class MainCharacter : MonoBehaviour
                 // game over
                 print("PLAYER LOST");
                 resetHealth = false;
+                startCombat = false;
                 charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
                 foreach (CharacterClass tempChar in listOfClasses)
                 {
                     tempChar.resetVariables();
                 }
+                banPickRef.WinLoseCondition();
                 StopCoroutine(AttackTrigger());
                 enemyRef.StopAttacking();
-                banPickRef.WinLoseCondition();
                 ChangeRound(0);
             }
             else

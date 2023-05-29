@@ -27,7 +27,7 @@ public class BanPickUI : MonoBehaviour
     [SerializeField] List<Text> enemyBenchManaText;
 
 
-    private int bpTimes = 0;
+    public int bpTimes = 0;
     private string bpPeriod = "Ban";
 
     private int[] isBPable = new int [10];
@@ -88,7 +88,6 @@ public class BanPickUI : MonoBehaviour
         {
             if (bpPeriod == "Ban")
             {
-                Debug.Log("Ban: Char" + number);
                 isBPable[number] = 1;
                 bpTimes += 1;
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 1); // used to keep track of how many times a char has been banned
@@ -100,14 +99,12 @@ public class BanPickUI : MonoBehaviour
                 {
                     number = Random.Range(0, 9);
                 }
-                Debug.Log("Char BP status" + isBPable);
                 isBPable[number] = 1;
                 bpTimes += 1;
                 UpdateUIImages(2, number);
             }
             else if (bpPeriod == "Pick")
             {
-                Debug.Log("Pick: Char" + number);
                 isBPable[number] = 2;
                 playerRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
                 playerRef.UpdateBalanceInfo(playerRef.listOfClasses[number].name, 2); // 2 keeps track of pick rate
@@ -127,7 +124,6 @@ public class BanPickUI : MonoBehaviour
                     number = Random.Range(0, 9);
                 }
 
-                Debug.Log("Char BP status" + isBPable);
                 enemyRef.charactersOnTeam.Add(playerRef.listOfClasses[number]);
                 isBPable[number] = 2;
                 bpTimes += 1;
@@ -149,7 +145,6 @@ public class BanPickUI : MonoBehaviour
 
         if (bpTimes >= 8)
         {
-            Debug.Log("BP END! Char BP status" + isBPable);
             banPickPanel.SetActive(false);
             character1UI.SetActive(true);
             character2UI.SetActive(true);
@@ -175,10 +170,7 @@ public class BanPickUI : MonoBehaviour
                 print("SWAP button isn't in scene or named correctly");
             }
             playerRef.startCombat = true;
-            for (int i = 0; i < 9; i++)
-            {
-                Debug.Log("Char " + i + ": " + isBPable[i]);
-            }
+            
             playerRef.swapCharacters();
             enemyRef.swapCharacters();
             currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
@@ -200,8 +192,8 @@ public class BanPickUI : MonoBehaviour
 
         for (int i=0; i<playerRef.charactersOnTeam.Count; i ++)
         {
-            benchHpText[i].text = "Health: " + playerRef.charactersOnTeam[i].tempHealth;
-            benchManaText[i].text = "Mana: " + playerRef.charactersOnTeam[i].currentMana;
+            benchHpText[i % playerRef.charactersOnTeam.Count].text = "Health: " + playerRef.charactersOnTeam[i % playerRef.charactersOnTeam.Count].tempHealth;
+            benchManaText[i % playerRef.charactersOnTeam.Count].text = "Mana: " + playerRef.charactersOnTeam[i % playerRef.charactersOnTeam.Count].currentMana;
 
             /*
             healthSlider = benchCharImages[i].GetComponent<Slider>();
@@ -212,13 +204,48 @@ public class BanPickUI : MonoBehaviour
 
         for (int i = 0; i < enemyRef.charactersOnTeam.Count; i++)
         {
-            enemyBenchHpText[i].text = "Health: " + enemyRef.charactersOnTeam[i].tempHealth;
-            enemyBenchManaText[i].text = "Mana: " + enemyRef.charactersOnTeam[i].currentMana;
+            enemyBenchHpText[i % enemyRef.charactersOnTeam.Count].text = "Health: " + enemyRef.charactersOnTeam[i % enemyRef.charactersOnTeam.Count].tempHealth;
+            enemyBenchManaText[i % enemyRef.charactersOnTeam.Count].text = "Mana: " + enemyRef.charactersOnTeam[i % enemyRef.charactersOnTeam.Count].currentMana;
 
         }
 
     }
 
+    public void DisableBenchUI()
+    {
+        for(int i = 0; i < benchCharImages.Count; i++)
+        {
+            benchCharImages[i].gameObject.SetActive(false);
+        }
+        //[SerializeField] List<Image> benchCharImages;
+        //[SerializeField] List<Image> enemyBenchCharImages;
+        for (int i = 0; i < enemyBenchCharImages.Count; i++)
+        {
+            enemyBenchCharImages[i].gameObject.SetActive(false);
+        }
+        /*
+        //[SerializeField] List<Text> benchHpText;
+        for (int i = 0; i < benchHpText.Count; i++)
+        {
+            benchHpText[i].gameObject.SetActive(false);
+        }
+        //[SerializeField] List<Text> benchManaText;
+        for (int i = 0; i < benchManaText.Count; i++)
+        {
+            benchManaText[i].gameObject.SetActive(false);
+        }
+        //[SerializeField] List<Text> enemyBenchHpText;
+        for (int i = 0; i < enemyBenchHpText.Count; i++)
+        {
+            enemyBenchHpText[i].gameObject.SetActive(false);
+        }
+        //[SerializeField] List<Text> enemyBenchManaText;
+        for (int i = 0; i < enemyBenchManaText.Count; i++)
+        {
+            enemyBenchManaText[i].gameObject.SetActive(false);
+        }
+        */
+    }
 
 
     private void ActivateAbilityHelper()

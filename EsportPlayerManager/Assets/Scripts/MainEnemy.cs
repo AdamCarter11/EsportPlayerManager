@@ -42,10 +42,17 @@ public class MainEnemy : MonoBehaviour
         if (enemyStartCombat)
         {
             enemyStartCombat = false;
+            resetHealth = true;
             //print("Starting combat, player health: " + playerRef.getCurrentCharacter().tempHealth);
             print("enemy started combat");
             //startCombat = false;
             StartCoroutine(AttackTrigger());
+        }
+
+        if (charClass.tempHealth <= 0 && resetHealth)
+        {
+            print("character death");
+            swapCharacters();
         }
     }
     public void SwitchEnemyToAttack()
@@ -131,17 +138,20 @@ public class MainEnemy : MonoBehaviour
             if (charactersOnTeam.Count <= 1 && resetHealth)
             {
                 // game over
-                print("PLAYER LOST");
+                print("PLAYER Win");
+                enemyStartCombat = false;
                 resetHealth = false;
                 charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                playerRef.ChangeRound(1);
                 foreach (CharacterClass tempChar in playerRef.listOfClasses)
                 {
                     tempChar.resetVariables();
                 }
+                
                 StopCoroutine(AttackTrigger());
                 playerRef.StopAttacking();
                 banPickRef.WinLoseCondition();
-                playerRef.ChangeRound(0);
+                
             }
             else
             {

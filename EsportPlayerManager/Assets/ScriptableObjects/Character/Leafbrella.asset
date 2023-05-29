@@ -19,8 +19,8 @@ MonoBehaviour:
   tempAttack: 20
   baseAttackSpeed: 1
   tempAttackSpeed: 1
-  baseDefense: 50
-  tempDefense: 50
+  baseDefense: 10
+  tempDefense: 10
   currentMana: 0
   manaIncreaseAmount: 3
   abilities: {fileID: 11400000, guid: 88e0232b0c27d4a4d808c780437c5ace, type: 2}

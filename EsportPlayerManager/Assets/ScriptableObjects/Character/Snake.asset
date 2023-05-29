@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Mage dude
   baseHealth: 70
-  tempHealth: 0
+  tempHealth: 70
   baseAttack: 30
-  tempAttack: 0
+  tempAttack: 30
   baseAttackSpeed: 1
-  tempAttackSpeed: 0
-  baseDefense: 40
-  tempDefense: 0
+  tempAttackSpeed: 1
+  baseDefense: 10
+  tempDefense: 10
   currentMana: 0
   manaIncreaseAmount: 3
   abilities: {fileID: 11400000, guid: df77d277fa2029043aeb95c2406f5a4f, type: 2}
