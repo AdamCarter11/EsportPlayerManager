@@ -21,6 +21,9 @@ public class CharacterClass : ScriptableObject
 
     [HideInInspector] public float currentMana;
 
+    public int baseDodge;
+    [HideInInspector] public int tempDodge;
+
     public int manaIncreaseAmount;
 
     public Ability abilities;   // if we want to come back and add multiple actives, make this a list

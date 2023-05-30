@@ -174,6 +174,7 @@ public class BanPickUI : MonoBehaviour
             
             playerRef.swapCharacters();
             enemyRef.swapCharacters();
+            playerRef.ApplyClassBonuses();
             currPlayerChar = playerRef.GetComponent<MainCharacter>().getCurrentCharacter();
             playerNameText.text = currPlayerChar.name;
             character1UI.GetComponent<Image>().sprite = currPlayerChar.characterSprite;

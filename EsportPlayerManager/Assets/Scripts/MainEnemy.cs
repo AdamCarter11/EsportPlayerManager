@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainEnemy : MonoBehaviour
 {
-    [SerializeField] CharacterClass charClass;
+    public CharacterClass charClass;
     private MainCharacter playerRef;
     public List<CharacterClass> charactersOnTeam;
     bool enemyStartCombat = false;

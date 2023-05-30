@@ -43,6 +43,8 @@ public class MainCharacter : MonoBehaviour
     BanPickUI banPickRef;
     int wins = 0;
     int combatRounds = 1;
+    bool revived = false;
+    float mageBuff = 0;
 
     private void Awake()
     {
@@ -120,7 +122,8 @@ public class MainCharacter : MonoBehaviour
         wins += changeWinVal;
 
         banPickRef.DisableBenchUI();
-
+        mageBuff = 0;
+        revived = false;
         foreach (CharacterClass tempChar in listOfClasses)
         {
             tempChar.resetVariables();
@@ -250,9 +253,48 @@ public class MainCharacter : MonoBehaviour
         {
             yield return new WaitForSeconds(charClass.baseAttackSpeed);
             // damage enemy
-            enemyRef.TakeDamage(charClass.tempAttack);
+            float bonusDamage = 0;
+            if(charClass.characterClass.occupationClassTypeEnumVal == OccupationClassType.Berserker)
+            {
+                if(CountOccupationalClass(OccupationClassType.Berserker) >= 2)
+                {
+                    bonusDamage = .5f * (charClass.baseHealth - charClass.tempHealth);
+                }
+                else if (CountOccupationalClass(OccupationClassType.Berserker) >= 1)
+                {
+                    bonusDamage = .25f * (charClass.baseHealth - charClass.tempHealth);
+                }
+            }
+            else
+            {
+                bonusDamage = 0;
+            }
+            enemyRef.TakeDamage(charClass.tempAttack + Mathf.CeilToInt(bonusDamage));
+            if(CountElementClass(ElementalClassType.Water) >= 3)
+                charClass.tempHealth += Mathf.CeilToInt(charClass.tempAttack * .15f);
+            else if (CountElementClass(ElementalClassType.Water) >= 2)
+                charClass.tempHealth += Mathf.CeilToInt(charClass.tempAttack * .12f);
+            else if (CountElementClass(ElementalClassType.Water) >= 1)
+                charClass.tempHealth += Mathf.CeilToInt(charClass.tempAttack * .08f);
 
-            charClass.currentMana += charClass.manaIncreaseAmount;
+            switch (charClass.characterClass.occupationClassTypeEnumVal)
+            {
+                case OccupationClassType.Mage:
+                    if (CountOccupationalClass(OccupationClassType.Mage) >= 2)
+                    {
+                        enemyRef.charClass.currentMana -= 2;
+                        charClass.currentMana += 2;
+                    }
+                    else if (CountOccupationalClass(OccupationClassType.Mage) >= 1)
+                    {
+                        enemyRef.charClass.currentMana -= 1;
+                        charClass.currentMana += 1;
+                    }
+                    break;
+            }
+
+            // TO DO: maybe make these variables right at the start so we don't keep checking?
+            charClass.currentMana += Mathf.CeilToInt((float)charClass.manaIncreaseAmount * ((CountElementClass(ElementalClassType.Water) / 2) + 1));
             switch (charClass.passiveAbility.passiveEffect)
             {
                 case passiveAbility.increaseDamagePerAttack:
@@ -262,7 +304,11 @@ public class MainCharacter : MonoBehaviour
                     //print("stronger less allies passive passive");
                     break;
             }
-            //print(charClass.baseAttack);
+            // checks for fire elemental buffs
+            if (CountElementClass(ElementalClassType.Fire) >= 2)
+                charClass.tempAttack += 2;
+            else if (CountElementClass(ElementalClassType.Fire) >= 1)
+                charClass.tempAttack += 1;
         }
     }
 
@@ -289,9 +335,17 @@ public class MainCharacter : MonoBehaviour
             }
             else
             {
-                charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
-                whichToSwapTo = charactersOnTeam[whichCharacter % charactersOnTeam.Count];
-                charClass = whichToSwapTo;
+                if(CountElementClass(ElementalClassType.Grass) >= 3 && !revived)
+                {
+                    revived = true;
+                    charClass.tempHealth += Mathf.CeilToInt(charClass.baseHealth * .10f);
+                }
+                else
+                {
+                    charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                    whichToSwapTo = charactersOnTeam[whichCharacter % charactersOnTeam.Count];
+                    charClass = whichToSwapTo;
+                }
             }
         }
         else
@@ -308,7 +362,27 @@ public class MainCharacter : MonoBehaviour
     }
     public void TakeDamage(int damageToTake)
     {
-        charClass.tempHealth -= Mathf.Max(Mathf.CeilToInt((float)damageToTake / charClass.tempDefense), 1);
+        int rando = UnityEngine.Random.Range(0,100);
+        if (rando > charClass.tempDodge)
+        {
+            charClass.tempHealth -= Mathf.Max(Mathf.CeilToInt((float)damageToTake / charClass.tempDefense), 1);
+            if(charClass.tempHealth < charClass.baseHealth / 10 && CountOccupationalClass(OccupationClassType.Berserker) > 2)
+            {
+                //activate berserk mana regen
+                if(charClass.currentMana < 100)
+                {
+                    charClass.currentMana = 100;
+                }
+            }
+        }
+        else
+        {
+            print("miss");
+            if (charClass.characterClass.occupationClassTypeEnumVal == OccupationClassType.Rogue)
+            {
+                enemyRef.TakeDamage(charClass.tempAttack);
+            }
+        }
     }
     public void IncreaseProf(int whichChar , float xpInrease)
     {
@@ -344,15 +418,49 @@ public class MainCharacter : MonoBehaviour
     {
         if (charClass.currentMana >= charClass.abilities.manaCost)
         {
-            print("Activated PLAYER ability!");
-            charClass.currentMana -= charClass.abilities.manaCost;
-            // TO DO: activate ability
-            // reduce enemy health by ability damage
-            enemyRef.getCurrentCharacter().tempHealth -= charClass.abilities.damage;
-            // change enemy stats by ability
-            enemyRef.changeStats(charClass);
-            // buff yourself
-            changeStats(charClass);
+            if (CountOccupationalClass(OccupationClassType.Mage) > 2)
+            {
+                print("Activated PLAYER ability!");
+                charClass.currentMana -= charClass.abilities.manaCost;
+                // reduce enemy health by ability damage
+                enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage * (1 + mageBuff / 100));
+                // change enemy stats by ability
+                enemyRef.changeStats(charClass);
+                // buff yourself
+                changeStats(charClass);
+                if (CountElementClass(ElementalClassType.Water) > 2)
+                {
+                    // reduce enemy health by ability damage
+                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage * .50f * (1 + mageBuff / 100));
+                    // change enemy stats by ability
+                    enemyRef.changeStats(charClass);
+                    // buff yourself
+                    changeStats(charClass);
+                }
+                mageBuff += 20;
+            }
+            else
+            {
+                print("Activated PLAYER ability!");
+                charClass.currentMana -= charClass.abilities.manaCost;
+                // reduce enemy health by ability damage
+                enemyRef.getCurrentCharacter().tempHealth -= charClass.abilities.damage;
+                // change enemy stats by ability
+                enemyRef.changeStats(charClass);
+                // buff yourself
+                changeStats(charClass);
+                if (CountElementClass(ElementalClassType.Water) > 2)
+                {
+                    // reduce enemy health by ability damage
+                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage * .50f);
+                    // change enemy stats by ability
+                    enemyRef.changeStats(charClass);
+                    // buff yourself
+                    changeStats(charClass);
+                }
+            }
+            
+            
         }
     }
     public void UpdateBalanceInfo(string charName, int banOrPick)
@@ -373,6 +481,56 @@ public class MainCharacter : MonoBehaviour
                     tempBanCount.picks++;
                     charBalancingList[i] = tempBanCount;
                 }
+            }
+        }
+    }
+
+    private int CountElementClass(ElementalClassType elementCheck)
+    {
+        int i = 0;
+        foreach (CharacterClass tempChar in charactersOnTeam)
+        {
+            if (tempChar.characterClass.classTypeEnumVal == elementCheck)
+            {
+                i++;
+            }
+        }
+        return i;
+    }
+    private int CountOccupationalClass(OccupationClassType elementCheck)
+    {
+        int i = 0;
+        foreach (CharacterClass tempChar in charactersOnTeam)
+        {
+            if (tempChar.characterClass.occupationClassTypeEnumVal == elementCheck)
+            {
+                i++;
+            }
+        }
+        return i;
+    }
+    public void ApplyClassBonuses()
+    {
+        // count how many times a specific class shows up
+        int rogue = 0;
+        foreach(CharacterClass tempChar in charactersOnTeam)
+        {
+            if(tempChar.characterClass.occupationClassTypeEnumVal == OccupationClassType.Rogue)
+            {
+                rogue++;
+            }
+        }
+        // apply bonuses based on class amount
+        foreach (CharacterClass tempChar in charactersOnTeam)
+        {
+            if (tempChar.characterClass.occupationClassTypeEnumVal == OccupationClassType.Rogue)
+            {
+                if (rogue == 1)
+                    tempChar.tempDodge += 25;
+                if(rogue == 2)
+                    tempChar.tempDodge += 50;
+                if(rogue == 3)
+                    tempChar.tempDodge += 60;
             }
         }
     }
