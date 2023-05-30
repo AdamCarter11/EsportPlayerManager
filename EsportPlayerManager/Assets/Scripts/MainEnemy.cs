@@ -129,7 +129,7 @@ public class MainEnemy : MonoBehaviour
             charClass.currentMana -= charClass.abilities.manaCost;
             // TO DO: activate ability
             // reduce enemy health by ability damage
-            playerRef.getCurrentCharacter().tempHealth -= charClass.abilities.damage;
+            playerRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / playerRef.getCurrentCharacter().tempDefense);
             // change enemy stats by ability
             playerRef.changeStats(charClass);
             // buff yourself

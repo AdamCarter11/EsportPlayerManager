@@ -363,7 +363,7 @@ public class MainCharacter : MonoBehaviour
     public void TakeDamage(int damageToTake)
     {
         int rando = UnityEngine.Random.Range(0,100);
-        if (rando > charClass.tempDodge)
+        if (rando >= charClass.tempDodge)
         {
             charClass.tempHealth -= Mathf.Max(Mathf.CeilToInt((float)damageToTake / charClass.tempDefense), 1);
             if(charClass.tempHealth < charClass.baseHealth / 10 && CountOccupationalClass(OccupationClassType.Berserker) > 2)
@@ -377,7 +377,7 @@ public class MainCharacter : MonoBehaviour
         }
         else
         {
-            print("miss");
+            print("miss: " + charClass.tempDodge);
             if (charClass.characterClass.occupationClassTypeEnumVal == OccupationClassType.Rogue)
             {
                 enemyRef.TakeDamage(charClass.tempAttack);
@@ -423,7 +423,7 @@ public class MainCharacter : MonoBehaviour
                 print("Activated PLAYER ability!");
                 charClass.currentMana -= charClass.abilities.manaCost;
                 // reduce enemy health by ability damage
-                enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage * (1 + mageBuff / 100));
+                enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense * (1 + mageBuff / 100));
                 // change enemy stats by ability
                 enemyRef.changeStats(charClass);
                 // buff yourself
@@ -431,7 +431,7 @@ public class MainCharacter : MonoBehaviour
                 if (CountElementClass(ElementalClassType.Water) > 2)
                 {
                     // reduce enemy health by ability damage
-                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage * .50f * (1 + mageBuff / 100));
+                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense * .50f * (1 + mageBuff / 100));
                     // change enemy stats by ability
                     enemyRef.changeStats(charClass);
                     // buff yourself
@@ -444,7 +444,7 @@ public class MainCharacter : MonoBehaviour
                 print("Activated PLAYER ability!");
                 charClass.currentMana -= charClass.abilities.manaCost;
                 // reduce enemy health by ability damage
-                enemyRef.getCurrentCharacter().tempHealth -= charClass.abilities.damage;
+                enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense);
                 // change enemy stats by ability
                 enemyRef.changeStats(charClass);
                 // buff yourself
@@ -452,7 +452,7 @@ public class MainCharacter : MonoBehaviour
                 if (CountElementClass(ElementalClassType.Water) > 2)
                 {
                     // reduce enemy health by ability damage
-                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage * .50f);
+                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense * .50f);
                     // change enemy stats by ability
                     enemyRef.changeStats(charClass);
                     // buff yourself
@@ -526,11 +526,11 @@ public class MainCharacter : MonoBehaviour
             if (tempChar.characterClass.occupationClassTypeEnumVal == OccupationClassType.Rogue)
             {
                 if (rogue == 1)
-                    tempChar.tempDodge += 25;
+                    tempChar.tempDodge = 25;
                 if(rogue == 2)
-                    tempChar.tempDodge += 50;
+                    tempChar.tempDodge = 50;
                 if(rogue == 3)
-                    tempChar.tempDodge += 60;
+                    tempChar.tempDodge = 60;
             }
         }
     }

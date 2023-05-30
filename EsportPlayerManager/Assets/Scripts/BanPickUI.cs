@@ -25,6 +25,7 @@ public class BanPickUI : MonoBehaviour
     [SerializeField] List<Text> benchManaText;
     [SerializeField] List<Text> enemyBenchHpText;
     [SerializeField] List<Text> enemyBenchManaText;
+    [SerializeField] AudioSource roundStartSfx;
 
 
     public int bpTimes = 0;
@@ -171,7 +172,7 @@ public class BanPickUI : MonoBehaviour
                 print("SWAP button isn't in scene or named correctly");
             }
             playerRef.startCombat = true;
-            
+            roundStartSfx.Play();
             playerRef.swapCharacters();
             enemyRef.swapCharacters();
             playerRef.ApplyClassBonuses();
