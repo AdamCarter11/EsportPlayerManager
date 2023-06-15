@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour
 {
+    public List<CharacterClass> charactersOnTeam;
+
     public void ApplyClassBonuses()
     {
 
