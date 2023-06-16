@@ -13,12 +13,17 @@ public class BanPickUI : MonoBehaviour
     private CharacterClass currEnemyChar;
 
     [SerializeField] GameObject banPickPanel;
+    [SerializeField] GameObject banPickInfo;
     [SerializeField] GameObject character1UI, character2UI;
     [SerializeField] TMP_Text playerHealthText, playerManaText;
     [SerializeField] TMP_Text enemyHealthText, enemyManaText;
     [SerializeField] TMP_Text playerNameText;
     [SerializeField] TMP_Text enemyNameText;
     [SerializeField] TMP_Text roundsText;
+    [SerializeField] TMP_Text descriptionText;
+    [SerializeField] TMP_Text periodText;
+
+
     [SerializeField] List<Image> benchCharImages;
     [SerializeField] List<Image> enemyBenchCharImages;
     [SerializeField] List<Text> benchHpText;
@@ -43,6 +48,9 @@ public class BanPickUI : MonoBehaviour
         enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
         currEnemyChar = enemyRef.GetComponent<MainEnemy>().getCurrentCharacter();
         //playerRef.dayCount++;
+
+        descriptionText.text = "Choose a champion you want to ban";
+
         UpdateUIImages(0, -1);
     }
 
@@ -103,6 +111,9 @@ public class BanPickUI : MonoBehaviour
                 isBPable[number] = 1;
                 bpTimes += 1;
                 UpdateUIImages(2, number);
+
+                descriptionText.text = "Choose a champion you want to pick";
+
             }
             else if (bpPeriod == "Pick")
             {
@@ -114,6 +125,7 @@ public class BanPickUI : MonoBehaviour
 
             }
             bpPeriod = "Pick";
+            
 
 
             if (bpTimes >= 3)
@@ -135,7 +147,8 @@ public class BanPickUI : MonoBehaviour
                     Debug.Log("Char " + i + ": " + isBPable[i]);
                 }
                 */
-            }   
+            }
+            periodText.text = "BP Period:(" + ((bpTimes+3)/2) + "/4)";
         }
         else
         {
@@ -147,6 +160,7 @@ public class BanPickUI : MonoBehaviour
         if (bpTimes >= 8)
         {
             banPickPanel.SetActive(false);
+            banPickInfo.SetActive(false);
             character1UI.SetActive(true);
             character2UI.SetActive(true);
             enemyNameText.text = currEnemyChar.name;
