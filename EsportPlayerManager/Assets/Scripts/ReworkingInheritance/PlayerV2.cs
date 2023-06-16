@@ -7,6 +7,7 @@ public class PlayerV2 : BaseCharacter
 {
     // references
     [SerializeField] CharacterClass charClass;
+    public List<CharacterClass> listOfClasses;
     private MainEnemy enemyRef;
     BanPickUI banPickRef;
 
@@ -40,7 +41,7 @@ public class PlayerV2 : BaseCharacter
         if (charClass.tempHealth <= 0 && resetHealth)
         {
             print("character death");
-            swapCharacters();
+            //swapCharacters();
         }
     }
     IEnumerator CoroutineAttack()

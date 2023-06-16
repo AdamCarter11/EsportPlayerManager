@@ -26,7 +26,7 @@ public class EnemyV2 : BaseCharacter
         if (charClass.tempHealth <= 0 && resetHealth)
         {
             print("character death");
-            swapCharacters();
+            //swapCharacters();
         }
     }
     IEnumerator CoroutineAttack()

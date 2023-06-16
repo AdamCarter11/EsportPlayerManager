@@ -6,12 +6,15 @@ public class BaseCharacter : MonoBehaviour
 {
     [SerializeField] CharacterClass charClass;
     public List<CharacterClass> charactersOnTeam;
-    private MainEnemy enemyRef;
+    private MainEnemy enemyRef; // TO DO: this probably should get removed, and then the functions should use parameters
+    BanPickUI banPickRef;
+    [HideInInspector] public bool startCombat;  // TO DO: there may be a better solution to this
 
 
     bool revived = false;
     float mageBuff = 0;
     [HideInInspector] public bool resetHealth;
+    int whichCharacter = 0;
 
     public void ApplyClassBonuses()
     {
@@ -143,9 +146,13 @@ public class BaseCharacter : MonoBehaviour
             }
         }
     }
-    public void swapCharacters()    // this function also calls the ienumerator for attack, so it probably needs an extra parameter
+    
+    public void swapCharacters(List<CharacterClass> listOfClasses = null)    // this function also calls the ienumerator for attack, so it probably needs an extra parameter
     {
         CharacterClass whichToSwapTo;
+
+        banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();    // TO DO: this can definitly be implimented better (maybe only do it on the player?)
+
         if (charClass.tempHealth <= 0)
         {
             if (charactersOnTeam.Count <= 1 && resetHealth)
@@ -153,16 +160,25 @@ public class BaseCharacter : MonoBehaviour
                 // game over
                 print("PLAYER LOST");
                 resetHealth = false;
+
                 startCombat = false;
                 charactersOnTeam.RemoveAt(whichCharacter % charactersOnTeam.Count);
+                if(listOfClasses == null)
+                {
+                    PlayerV2 playerRef = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerV2>();
+                    listOfClasses = playerRef.listOfClasses;
+}
                 foreach (CharacterClass tempChar in listOfClasses)
                 {
                     tempChar.resetVariables();
                 }
                 banPickRef.WinLoseCondition();
-                StopCoroutine(AttackTrigger());
+
+                //StopCoroutine(AttackTrigger()); // TO DO: have a reference to the coroutine so we can stop them from this script
+
                 enemyRef.StopAttacking();
-                ChangeRound(0);
+
+                //ChangeRound(0); // TO DO: call this in the player script
             }
             else
             {
@@ -191,6 +207,7 @@ public class BaseCharacter : MonoBehaviour
         banPickRef.UpdateUI();
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
+    
     public void AttackTrigger()
     {
         
