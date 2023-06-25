@@ -8,6 +8,7 @@ using TMPro;
 
 public class RoomUIManager : MonoBehaviour
 {
+    [SerializeField] GameObject characterInfoPanel;
     [SerializeField] GameObject characterSelectPanel;
     [SerializeField] GameObject levelUpPanel;
     [SerializeField] Slider xpSlider;
@@ -34,7 +35,7 @@ public class RoomUIManager : MonoBehaviour
             if(rando < 30)
             {
                 int whichCharRando = Random.Range(0, 9);
-                string tempString = "You watched a video showing some spicy new tricks for " + playerRef.GetComponent<MainCharacter>().listOfClasses[whichCharRando].name;
+                string tempString = "You watched a video showing some spicy new tricks for " + playerRef.GetComponent<MainCharacter>().listOfClasses[whichCharRando].characterName;
                 eventUpgrade = true;
                 CharacterSelect(whichCharRando);
                 eventSfx.Play();
@@ -102,6 +103,21 @@ public class RoomUIManager : MonoBehaviour
             }
         }
     }
+
+    public void OpenCloseInfoPanel()
+    {
+        if (characterInfoPanel.activeSelf == false)
+        {
+            characterInfoPanel.SetActive(true);
+        }
+        else
+        {
+            characterInfoPanel.SetActive(false);
+        }
+        
+    }
+
+
     void UpdateUIImages(int whichMode, int whichSprite)
     {
         int i = 0;
