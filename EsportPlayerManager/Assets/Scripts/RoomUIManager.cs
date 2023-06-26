@@ -109,6 +109,7 @@ public class RoomUIManager : MonoBehaviour
         if (characterInfoPanel.activeSelf == false)
         {
             characterInfoPanel.SetActive(true);
+            UpdateCharInfoPanel();
         }
         else
         {
@@ -125,7 +126,8 @@ public class RoomUIManager : MonoBehaviour
         {
             // Access the child object
             GameObject childObject = childTransform.gameObject;
-            print("Name: " + childObject.name);
+
+            //print("Name: " + childObject.name);
 
             // Check if the child object has the specific component
             Image component = childObject.GetComponent<Image>();
@@ -151,6 +153,31 @@ public class RoomUIManager : MonoBehaviour
             }
         }
     }
+
+    void UpdateCharInfoPanel()
+    {
+        int i = 0;
+        foreach (Transform childTransform in characterInfoPanel.transform)
+        {
+            // Access the child object
+            
+
+            TMP_Text charName = childTransform.GetChild(0).GetComponent<TMP_Text>();
+            Image charImage = childTransform.GetChild(1).gameObject.GetComponent<Image>();
+
+            
+            print("Name: " + playerRef.GetComponent<MainCharacter>().listOfClasses[i].name);
+
+            // Check if the child object has the specific component
+            if (charImage != null && i < playerRef.GetComponent<MainCharacter>().listOfClasses.Count)
+            {
+                charName.text = playerRef.GetComponent<MainCharacter>().listOfClasses[i].name;
+                charImage.sprite = playerRef.GetComponent<MainCharacter>().listOfClasses[i].characterSprite;
+                i++;
+            }
+        }
+    }
+
     IEnumerator FillXpBar(float startingXp, float targetXp)
     {
         float progress = startingXp;
