@@ -82,7 +82,7 @@ public class CameraZoom : MonoBehaviour
 
         // Ensure the camera's orthographic size is set to the target value
         Camera.main.orthographicSize = targetOrthographicSize;
-        SceneManager.LoadScene("CombatScene");
+        SceneManager.LoadScene("CopyCombat");
         // Reset the camera's position to the original position
         //transform.position = originalPosition;
     }

@@ -5,11 +5,17 @@ using UnityEngine;
 public class EnemyV2 : BaseCharacter
 {
     // reference
-    public CharacterClass charClass;
+    //public CharacterClass currClass;
+    private GameObject playerRef;
 
     // checks
     bool enemyStartCombat = false;
     bool resetHealth = false;
+
+    private void Start()
+    {
+        playerRef = GameObject.FindGameObjectWithTag("MainCharacter");
+    }
 
     private void Update()
     {
@@ -23,7 +29,7 @@ public class EnemyV2 : BaseCharacter
             StartCoroutine(CoroutineAttack());
         }
 
-        if (charClass.tempHealth <= 0 && resetHealth)
+        if (gameObject.GetComponent<BaseCharacter>().charClass.tempHealth <= 0 && resetHealth)
         {
             print("character death");
             //swapCharacters();
@@ -33,8 +39,26 @@ public class EnemyV2 : BaseCharacter
     {
         while (true)
         {
-            yield return new WaitForSeconds(charClass.baseAttackSpeed);
-            AttackTrigger();
+            yield return new WaitForSeconds(gameObject.GetComponent<BaseCharacter>().charClass.baseAttackSpeed);
+            AttackTrigger(playerRef);
         }
     }
+    public void StopEnemyAttack()
+    {
+        StopCoroutine(CoroutineAttack());
+    }
+    public void SwitchEnemyHelper()
+    {
+        enemyStartCombat = true;
+    }
+    public void TakeDamageHelper(int tempDamage)
+    {
+        TakeDamage(tempDamage);
+    }
+    /*
+    public CharacterClass getCurrentCharacter()
+    {
+        return currClass;
+    }
+    */
 }

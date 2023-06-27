@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CombatScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/CopyCombat.unity
+    guid: 5677438df5a91d54da2e31c05bd276f4
   m_configObjects: {}

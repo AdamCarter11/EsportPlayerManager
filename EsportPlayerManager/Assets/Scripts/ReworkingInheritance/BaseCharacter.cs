@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour
 {
-    [SerializeField] CharacterClass charClass;
+    [SerializeField] public CharacterClass charClass;
     public List<CharacterClass> charactersOnTeam;
-    private MainEnemy enemyRef; // TO DO: this probably should get removed, and then the functions should use parameters
+    //EnemyV2 enemyRef; // TO DO: this probably should get removed, and then the functions should use parameters
     BanPickUI banPickRef;
     [HideInInspector] public bool startCombat;  // TO DO: there may be a better solution to this
 
@@ -16,6 +16,14 @@ public class BaseCharacter : MonoBehaviour
     [HideInInspector] public bool resetHealth;
     int whichCharacter = 0;
 
+    GameObject playerRef;
+    GameObject enemyRef;
+
+    private void Start()
+    {
+        playerRef = GameObject.FindGameObjectWithTag("MainCharacter");
+        enemyRef = GameObject.FindGameObjectWithTag("MainEnemy");
+    }
     public void ApplyClassBonuses()
     {
         // count how many times a specific class shows up
@@ -65,26 +73,35 @@ public class BaseCharacter : MonoBehaviour
         }
         return i;
     }
-    public void ActivateAbility()
+    public void ActivateAbility(GameObject whichRef)
     {
+        BaseCharacter whichObj;
+        if (gameObject.GetComponent<EnemyV2>() != null)
+        {
+            whichObj = playerRef.GetComponent<BaseCharacter>();
+        }
+        else
+        {
+            whichObj = enemyRef.GetComponent<BaseCharacter>();
+        }
         if (charClass.currentMana >= charClass.abilities.manaCost)
         {
             if (CountOccupationalClass(OccupationClassType.Mage) > 2)
             {
-                print("Activated PLAYER ability!");
+                print("Activated PLAYER ability! w/ mage class");
                 charClass.currentMana -= charClass.abilities.manaCost;
                 // reduce enemy health by ability damage
-                enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense * (1 + mageBuff / 100));
+                whichObj.charClass.tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / whichObj.charClass.tempDefense * (1 + mageBuff / 100));
                 // change enemy stats by ability
-                enemyRef.changeStats(charClass);
+                whichObj.changeStats(charClass);
                 // buff yourself
                 changeStats(charClass);
                 if (CountElementClass(ElementalClassType.Water) > 2)
                 {
                     // reduce enemy health by ability damage
-                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense * .50f * (1 + mageBuff / 100));
+                    whichObj.charClass.tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / whichObj.charClass.tempDefense * .50f * (1 + mageBuff / 100));
                     // change enemy stats by ability
-                    enemyRef.changeStats(charClass);
+                    whichObj.changeStats(charClass);
                     // buff yourself
                     changeStats(charClass);
                 }
@@ -95,17 +112,17 @@ public class BaseCharacter : MonoBehaviour
                 print("Activated PLAYER ability!");
                 charClass.currentMana -= charClass.abilities.manaCost;
                 // reduce enemy health by ability damage
-                enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense);
+                whichObj.charClass.tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / whichObj.charClass.tempDefense);
                 // change enemy stats by ability
-                enemyRef.changeStats(charClass);
+                whichObj.changeStats(charClass);
                 // buff yourself
                 changeStats(charClass);
                 if (CountElementClass(ElementalClassType.Water) > 2)
                 {
                     // reduce enemy health by ability damage
-                    enemyRef.getCurrentCharacter().tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / enemyRef.charClass.tempDefense * .50f);
+                    whichObj.charClass.tempHealth -= Mathf.CeilToInt(charClass.abilities.damage / whichObj.charClass.tempDefense * .50f);
                     // change enemy stats by ability
-                    enemyRef.changeStats(charClass);
+                    whichObj.changeStats(charClass);
                     // buff yourself
                     changeStats(charClass);
                 }
@@ -142,12 +159,20 @@ public class BaseCharacter : MonoBehaviour
             print("miss: " + charClass.tempDodge);
             if (charClass.characterClass.occupationClassTypeEnumVal == OccupationClassType.Rogue)
             {
-                enemyRef.TakeDamage(charClass.tempAttack);
+                // have this check here to see who is the character that should be getting retaliated against
+                if(gameObject.GetComponent<EnemyV2>() != null)
+                {
+                    playerRef.GetComponent<BaseCharacter>().TakeDamage(charClass.tempAttack);
+                }
+                else if(gameObject.GetComponent<PlayerV2>() != null)
+                {
+                    enemyRef.GetComponent<BaseCharacter>().TakeDamage(charClass.tempAttack);
+                }
             }
         }
     }
     
-    public void swapCharacters(List<CharacterClass> listOfClasses = null)    // this function also calls the ienumerator for attack, so it probably needs an extra parameter
+    public void swapCharacters(List<CharacterClass> listOfClasses = null)
     {
         CharacterClass whichToSwapTo;
 
@@ -167,18 +192,21 @@ public class BaseCharacter : MonoBehaviour
                 {
                     PlayerV2 playerRef = GameObject.FindGameObjectWithTag("MainCharacter").GetComponent<PlayerV2>();
                     listOfClasses = playerRef.listOfClasses;
-}
+                }
                 foreach (CharacterClass tempChar in listOfClasses)
                 {
                     tempChar.resetVariables();
                 }
                 banPickRef.WinLoseCondition();
 
-                //StopCoroutine(AttackTrigger()); // TO DO: have a reference to the coroutine so we can stop them from this script
+                playerRef.GetComponent<PlayerV2>().StopPlayerAttack();
+                enemyRef.GetComponent<EnemyV2>().StopEnemyAttack();
 
-                enemyRef.StopAttacking();
-
-                //ChangeRound(0); // TO DO: call this in the player script
+                //This could be written better, but basically check which script it was called from and then change the rounds accordingly
+                if(ReturnOtherCharacter() == enemyRef)
+                    playerRef.GetComponent<PlayerV2>().ChangeRound(0);
+                else if(ReturnOtherCharacter() == playerRef)
+                    playerRef.GetComponent<PlayerV2>().ChangeRound(1);
             }
             else
             {
@@ -208,9 +236,77 @@ public class BaseCharacter : MonoBehaviour
         print("current character: " + charClass.name + " attack speed: " + charClass.tempAttackSpeed);
     }
     
-    public void AttackTrigger()
+    public void AttackTrigger(GameObject whichChar)
     {
-        
+        float bonusDamage = 0;
+        if (charClass.characterClass.occupationClassTypeEnumVal == OccupationClassType.Berserker)
+        {
+            if (CountOccupationalClass(OccupationClassType.Berserker) >= 2)
+            {
+                bonusDamage = .5f * (charClass.baseHealth - charClass.tempHealth);
+            }
+            else if (CountOccupationalClass(OccupationClassType.Berserker) >= 1)
+            {
+                bonusDamage = .25f * (charClass.baseHealth - charClass.tempHealth);
+            }
+        }
+        else
+        {
+            bonusDamage = 0;
+        }
+        whichChar.GetComponent<BaseCharacter>().TakeDamage(charClass.tempAttack + Mathf.CeilToInt(bonusDamage));
+        if (CountElementClass(ElementalClassType.Water) >= 3)
+            charClass.tempHealth += Mathf.CeilToInt(charClass.tempAttack * .15f);
+        else if (CountElementClass(ElementalClassType.Water) >= 2)
+            charClass.tempHealth += Mathf.CeilToInt(charClass.tempAttack * .12f);
+        else if (CountElementClass(ElementalClassType.Water) >= 1)
+            charClass.tempHealth += Mathf.CeilToInt(charClass.tempAttack * .08f);
+
+        switch (charClass.characterClass.occupationClassTypeEnumVal)
+        {
+            case OccupationClassType.Mage:
+                if (CountOccupationalClass(OccupationClassType.Mage) >= 2)
+                {
+                    whichChar.GetComponent<BaseCharacter>().charClass.currentMana -= 2;
+                    charClass.currentMana += 2;
+                }
+                else if (CountOccupationalClass(OccupationClassType.Mage) >= 1)
+                {
+                    whichChar.GetComponent<BaseCharacter>().charClass.currentMana -= 1;
+                    charClass.currentMana += 1;
+                }
+                break;
+        }
+
+        // TO DO: maybe make these variables right at the start so we don't keep checking?
+        charClass.currentMana += Mathf.CeilToInt((float)charClass.manaIncreaseAmount * ((CountElementClass(ElementalClassType.Water) / 2) + 1));
+        switch (charClass.passiveAbility.passiveEffect)
+        {
+            case passiveAbility.increaseDamagePerAttack:
+                //charClass.tempAttack += 1;
+                break;
+            case passiveAbility.StrongerLessAllies:
+                //print("stronger less allies passive passive");
+                break;
+        }
+        // checks for fire elemental buffs
+        if (CountElementClass(ElementalClassType.Fire) >= 2)
+            charClass.tempAttack += 2;
+        else if (CountElementClass(ElementalClassType.Fire) >= 1)
+            charClass.tempAttack += 1;
     }
-    //maybe also need a stop attacking func
+    
+    private GameObject ReturnOtherCharacter()
+    {
+        GameObject whichCharToReturn;
+        if (gameObject.GetComponent<EnemyV2>() != null)
+        {
+            whichCharToReturn = playerRef;
+        }
+        else
+        {
+            whichCharToReturn = enemyRef;
+        }
+        return whichCharToReturn;
+    }
 }

@@ -115,6 +115,7 @@ public class MainEnemy : MonoBehaviour
         {
             charClass.currentMana -= charClass.abilities.manaCost;
             // TO DO: activate ability
+            ActivateAbility();
         }
     }
     public CharacterClass getCurrentCharacter()

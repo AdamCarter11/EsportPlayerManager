@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 public struct CharProfficencies
 {
@@ -88,7 +88,7 @@ public class MainCharacter : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "CombatScene")
+        if(scene.name == "CopyCombat") //CombatScene
         {
             enemyRef = GameObject.FindGameObjectWithTag("MainEnemy").GetComponent<MainEnemy>();
             banPickRef = GameObject.FindGameObjectWithTag("CombatUI").GetComponent<BanPickUI>();
