@@ -9,6 +9,8 @@ using TMPro;
 public class RoomUIManager : MonoBehaviour
 {
     [SerializeField] GameObject characterInfoPanel;
+    [SerializeField] GameObject characterDetailPanel;
+
     [SerializeField] GameObject characterSelectPanel;
     [SerializeField] GameObject levelUpPanel;
     [SerializeField] Slider xpSlider;
@@ -116,6 +118,26 @@ public class RoomUIManager : MonoBehaviour
             characterInfoPanel.SetActive(false);
         }
         
+    }
+
+    public void OpenDetailPanel(int charNum)
+    {
+        if (characterDetailPanel.activeSelf == false)
+        {
+            characterDetailPanel.SetActive(true);
+            Image charImage = characterDetailPanel.transform.GetChild(1).GetComponent<Image>();
+            GameObject charText = characterDetailPanel.transform.GetChild(2).gameObject;
+
+
+            charImage.sprite = playerRef.GetComponent<MainCharacter>().listOfClasses[charNum].characterSprite;
+            charText.transform.GetChild(0).GetComponent<TMP_Text>().text = playerRef.GetComponent<MainCharacter>().listOfClasses[charNum].characterClass.classTypeEnumVal.ToString();
+            charText.transform.GetChild(1).GetComponent<TMP_Text>().text = playerRef.GetComponent<MainCharacter>().listOfClasses[charNum].characterClass.occupationClassTypeEnumVal.ToString();
+        }
+        
+    }
+    public void CloseDetailPanel()
+    {
+        characterDetailPanel.SetActive(false);
     }
 
 
